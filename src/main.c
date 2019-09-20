@@ -3,8 +3,8 @@
 void genStates(List *in, List *out);
 void expand(List *in, List *out);
 void carry(State *state, int m, int c);
-void isDinner(State *state);
-bool fuckloop(State *state);
+bool isDinner(State state);
+bool loop(State *state);
 bool feasible(State *state, int my, int cy);
   
 int main(void) {
@@ -30,7 +30,7 @@ int main(void) {
 void genStates(List *in, List *out) {
 
 	int count = 0;
-	while (count < 10) {
+	while (count < 2) {
 		expand(in,out);
 		llpopHead(in);
 		count++;
@@ -50,40 +50,38 @@ void expand(List *in, List *out) {
 		carryC = boat[i][1];
 		newState = state;
 		newState.parent = parent;
-		newState.b = !newState.b;
 		if (feasible(&newState,carryM,carryC)) {
-			carry(&newState,carryM,carryM);
+			carry(&newState,carryM,carryC);
+			newState.dinner = isDinner(newState);
 			llpshTail(out,newState);
-			llpshTail(in,newState);
-		}			
+			if (!newState.dinner)
+				llpshTail(in,newState);
+		}		
 	}
 }
 
 void carry(State *state, int m, int c) {
-	switch (state->b) {
-	case 0:
+
+	if (state->b) {
 		state->m -= m;
 		state->c -= c;
-		break;
-	case 1:
+	} else {
 		state->m += m;
 		state->c += c;
-		break;
-	
-	default:
-		exit(1);
-		break;
 	}
+
+	state->dinner = false;
+	state->b = !state->b;
 }
 
-void isDinner(State *state) {
-	int mx = state->m;
-	int cx = state->c;
-	int my = state->parent->m - state->m;
-	int cy = state->parent->c - state->c;
+bool isDinner(State state) {
+	int mx = state.m;
+	int cx = state.c;
+	int my = state.parent->m - state.m;
+	int cy = state.parent->c - state.c;
 	bool dinner  = (cx > mx) && (mx != 0);
 	bool dessert = (cy > my) && (my != 0);
-	state->dinner = (dinner || dessert);
+	return (dinner || dessert);
 }
 
 bool feasible(State *state, int my, int cy) {
@@ -93,10 +91,10 @@ bool feasible(State *state, int my, int cy) {
 
 	switch (state->b) {
 	case 0:
-		feasible = (my <= mx) && (cy <= cx);
+		feasible = (mx + my <= M) && (cx + cy <= C);
 		break;
 	case 1:
-		feasible = (mx + my <= M) && (cx + cy <= C);
+		feasible = (my <= mx) && (cy <= cx);
 		break;
 	
 	default:
@@ -105,4 +103,10 @@ bool feasible(State *state, int my, int cy) {
 	}
 
 	return feasible;
+}
+
+bool loop(State *state) {
+	bool lm = state->m == state->parent->m;
+	bool lc = state->c == state->parent->c;
+	return (lm && lc);
 }

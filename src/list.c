@@ -95,39 +95,37 @@ void llprt(List *list) {
         return;
     }
 
+    State *parnt, child;
     int movex, movey;
-    char *arrow;
+    char *arrow = " \u27A1 ";
 
     printf("\n\n:{%d} expandidos --------:\n", list->size);
     while (ptr != NULL) {
-        printf(" (%d,%d,%d)", ptr->state.m, ptr->state.c, ptr->state.b);
-        if (ptr->state.parent != NULL) {
 
-            switch (ptr->state.b) {
-            case 0:
-                movex = ptr->state.parent->m - ptr->state.m;
-                movey = ptr->state.parent->c - ptr->state.c;
-                arrow = "\u2B05";
-                break;
-            case 1:
-                movex = ptr->state.m - ptr->state.parent->m;
-                movey = ptr->state.c - ptr->state.parent->c;
-                arrow = "\u27A1";
-                break;
-            
-            default:
-                break;
+        parnt = ptr->state.parent;
+        child = ptr->state;
+        if (parnt != NULL) {
+
+            if (child.b) {
+                movex = child.m - parnt->m;
+                movey = child.c - parnt->c;
+                printf(" (%d,%d,%d)", M - parnt->m, C - parnt->c, parnt->b);
+                printf("%s[%d,%d]%s", arrow, movex, movey, arrow);
+                printf("(%d,%d,%d)", child.m, child.c, child.b);
+            } else {
+                movex = parnt->m - child.m;
+                movey = parnt->c - child.c;
+                printf(" (%d,%d,%d)", parnt->m, parnt->c, parnt->b);
+                printf("%s[%d,%d]%s", arrow, movex, movey, arrow);
+                printf("(%d,%d,%d)", M - child.m, C - child.c, child.b);
             }
 
-            printf(" %s ", arrow);
-            printf("[%d,%d] (", movex, movey);
-            printf("%d,", ptr->state.parent->m);
-            printf("%d,", ptr->state.parent->c);
-            printf("%d)", ptr->state.parent->b);
-            printf(ptr->state.dinner ? " \u2620\n":"\n");
+            printf(child.dinner ? " \u2620\n":"\n");
         }
-        else
-            printf(" \u2B05 \u2205\n");
+        else {
+            printf(" \u2205 --------------- ");
+            printf("(%d,%d,%d)\n", child.m, child.c, child.b);
+        }
         ptr = ptr->next;
     }
 }
