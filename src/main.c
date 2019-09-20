@@ -1,63 +1,52 @@
 #include "./includes/main.h"
 
-void genStates(List *in, List *out);
-void expand(List *in, List *out);
-void carry(State *state, int m, int c);
-bool isDinner(State state);
-bool loop(State *state);
-bool feasible(State *state, int my, int cy);
-  
-int main(void) {
+typedef struct state_t {
+	int m,c,b;
+	struct state_t *parent;
+} State;
 
-	List *in  = create();
-	List *out = create();
-
-	State state0 = { M,C,1,false,NULL };
-	llpshHead(in,state0);
-
-	genStates(in,out);
-	out->done = true;
-
-	llprt(in);
-	llprt(out);
-
-	llclr(in);
-	llclr(out);
-
-	return 0;
+int hashKey(State state) {
+	int m = state.m;
+	int c = state.c;
+	int b = state.b;
+	return (m*10+c+100*b);
 }
 
-void genStates(List *in, List *out) {
-
-	int count = 0;
-	while (count < 2) {
-		expand(in,out);
-		llpopHead(in);
-		count++;
-	}	
+void addState(State state, State *hashmap) {
+	int key = hashKey(state);
+	hashmap[key].m = state.m;
+	hashmap[key].c = state.c;
+	hashmap[key].b = state.b;
 }
 
-void expand(List *in, List *out) {
-	llpshHead(out,in->head->state);
-	State state = in->head->state;
-	State newState, *parent = &out->head->state;
-	
-	int boat[][2] ={{2,0},{0,2},{1,1},{1,0},{0,1}};
-	int carryM, carryC;
+void prtState(State state, State *hashmap) {
+	int key = hashKey(state);
+	printf(" #%03x (", key);
+	printf("%d,", hashmap[key].m);
+	printf("%d,", hashmap[key].c);
+	printf("%d" , hashmap[key].b);
+	printf(")\n");
+}
 
-	for (int i=0; i<5; i++) {
-		carryM = boat[i][0];
-		carryC = boat[i][1];
-		newState = state;
-		newState.parent = parent;
-		if (feasible(&newState,carryM,carryC)) {
-			carry(&newState,carryM,carryC);
-			newState.dinner = isDinner(newState);
-			llpshTail(out,newState);
-			if (!newState.dinner)
-				llpshTail(in,newState);
-		}		
-	}
+bool lookup(State state, State *hashmap) {
+	int key = hashKey(state);
+	int m = hashmap[key].m;
+	int c = hashmap[key].c;
+	int b = hashmap[key].b;
+	return (m+c+b > 0);
+}
+
+bool feasible(State state, int my, int cy) {
+	bool feasible = false;
+	int mx = state.m;
+	int cx = state.c;
+
+	if (state.b) {
+		feasible = (my <= mx) && (cy <= cx);
+	} else 
+		feasible = (mx + my <= M) && (cx + cy <= C);
+
+	return feasible;
 }
 
 void carry(State *state, int m, int c) {
@@ -69,44 +58,55 @@ void carry(State *state, int m, int c) {
 		state->m += m;
 		state->c += c;
 	}
-
-	state->dinner = false;
 	state->b = !state->b;
 }
 
-bool isDinner(State state) {
-	int mx = state.m;
-	int cx = state.c;
-	int my = state.parent->m - state.m;
-	int cy = state.parent->c - state.c;
-	bool dinner  = (cx > mx) && (mx != 0);
-	bool dessert = (cy > my) && (my != 0);
-	return (dinner || dessert);
-}
-
-bool feasible(State *state, int my, int cy) {
-	bool feasible = false;
-	int mx = state->m;
-	int cx = state->c;
-
-	switch (state->b) {
-	case 0:
-		feasible = (mx + my <= M) && (cx + cy <= C);
-		break;
-	case 1:
-		feasible = (my <= mx) && (cy <= cx);
-		break;
+void expand(State state, State *hashmap) {
+	State newState;
+	int key = hashKey(state);
 	
-	default:
-		exit(1);
-		break;
+	int boat[][2] ={{2,0},{0,2},{1,1},{1,0},{0,1}};
+	int carryM, carryC;
+
+	for (int i=0; i<5; i++) {
+		carryM = boat[i][0];
+		carryC = boat[i][1];
+		newState = state;
+		if (feasible(newState,carryM,carryC)) {
+			carry(&newState,carryM,carryC);
+			if (!lookup(newState,hashmap)) {
+				newState.parent = &hashmap[key];
+				addState(newState,hashmap);
+			}
+		}		
+	}
+}
+  
+int main(void) {
+
+	State start = { M,C,1,NULL };
+
+ 	State *hashmap = malloc((hashKey(start)+1)*sizeof(State));
+	memset(hashmap,-1,(hashKey(start)+1)*sizeof(State));
+
+	addState(start,hashmap);
+
+	for (int j = 0; j < 2; j++)
+		for (int i=0; i<=133; i++) {
+			if (hashmap[i].m != -1) {
+				expand(hashmap[i],hashmap);
+			}
+		}
+
+	for (int i=0; i<=133; i++) {
+		if (hashmap[i].m >= 0) {
+			printf(" #%03x (", i);
+			printf("%d,", hashmap[i].m);
+			printf("%d,", hashmap[i].c);
+			printf("%d" , hashmap[i].b);
+			printf(")\n");
+		}
 	}
 
-	return feasible;
-}
-
-bool loop(State *state) {
-	bool lm = state->m == state->parent->m;
-	bool lc = state->c == state->parent->c;
-	return (lm && lc);
+	return 0;
 }
