@@ -1,30 +1,15 @@
 #include "./includes/main.h"
 
-typedef struct state_t {
-	int m,c,b;
-	struct state_t *parent;
-} State;
-
-int hashKey(State state) {
-	int m = state.m;
-	int c = state.c;
-	int b = state.b;
-	return (m*10+c+100*b);
-}
-
-void addState(State state, State *hashmap) {
-	int key = hashKey(state);
-	hashmap[key].m = state.m;
-	hashmap[key].c = state.c;
-	hashmap[key].b = state.b;
-}
-
 void prtState(State state, State *hashmap) {
 	int key = hashKey(state);
 	printf(" #%03x (", key);
 	printf("%d,", hashmap[key].m);
 	printf("%d,", hashmap[key].c);
 	printf("%d" , hashmap[key].b);
+	printf(") - (");
+	printf("%d,", hashmap[key].parent->m);
+	printf("%d,", hashmap[key].parent->c);
+	printf("%d" , hashmap[key].parent->b);
 	printf(")\n");
 }
 
@@ -62,8 +47,8 @@ void carry(State *state, int m, int c) {
 }
 
 void expand(State state, State *hashmap) {
-	State newState;
-	int key = hashKey(state);
+	State child;
+	int parent = hashKey(state);
 	
 	int boat[][2] ={{2,0},{0,2},{1,1},{1,0},{0,1}};
 	int carryM, carryC;
@@ -71,12 +56,12 @@ void expand(State state, State *hashmap) {
 	for (int i=0; i<5; i++) {
 		carryM = boat[i][0];
 		carryC = boat[i][1];
-		newState = state;
-		if (feasible(newState,carryM,carryC)) {
-			carry(&newState,carryM,carryC);
-			if (!lookup(newState,hashmap)) {
-				newState.parent = &hashmap[key];
-				addState(newState,hashmap);
+		child = state;
+		if (feasible(child,carryM,carryC)) {
+			child.parent = &hashmap[parent];
+			carry(&child,carryM,carryC);
+			if (!lookup(child,hashmap)) {
+				addState(child,hashmap);
 			}
 		}		
 	}
@@ -85,28 +70,28 @@ void expand(State state, State *hashmap) {
 int main(void) {
 
 	State start = { M,C,1,NULL };
+ 	State *hashmap = initMap(start);
 
- 	State *hashmap = malloc((hashKey(start)+1)*sizeof(State));
-	memset(hashmap,-1,(hashKey(start)+1)*sizeof(State));
+	printf("%d <---\n", hashKey(start)+1);
 
 	addState(start,hashmap);
+	expand(start,hashmap);
 
-	for (int j = 0; j < 2; j++)
-		for (int i=0; i<=133; i++) {
-			if (hashmap[i].m != -1) {
-				expand(hashmap[i],hashmap);
-			}
-		}
-
-	for (int i=0; i<=133; i++) {
-		if (hashmap[i].m >= 0) {
-			printf(" #%03x (", i);
+ 	for (int i=0; i<=133; i++) {
+		if (hashmap[i].m >= 0 && hashmap[i].parent != NULL) {
+			printf(" (");
 			printf("%d,", hashmap[i].m);
 			printf("%d,", hashmap[i].c);
 			printf("%d" , hashmap[i].b);
+			printf(") - (");
+			printf("%d,", hashmap[i].parent->m);
+			printf("%d,", hashmap[i].parent->c);
+			printf("%d" , hashmap[i].parent->b);
 			printf(")\n");
-		}
+		 }
 	}
+
+	
 
 	return 0;
 }
