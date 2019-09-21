@@ -5,5 +5,6 @@ bool feasible(State state, int my, int cy);
 void isDinner(State *state);
 void carry(State *state, int m, int c);
 void expand(State state, State *hashmap);
+void solve(State *hashmap);
 
 #endif // _SOLVE_H

@@ -54,3 +54,11 @@ void expand(State state, State *hashmap) {
 		}		
 	}
 }
+
+void solve(State *hashmap) {
+	int *queue = malloc(mapSize()*sizeof(int));
+
+	
+
+	free(queue);
+}
