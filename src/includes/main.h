@@ -10,5 +10,6 @@
 #include <stdbool.h>
 
 #include "struct.h"
+#include "solve.h"
 
 #endif // _MAIN_H
