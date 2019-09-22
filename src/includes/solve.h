@@ -1,9 +1,9 @@
 #ifndef _SOLVE_H
 #define _SOLVE_H
 
+State carry(State state, int m, int c);
+State isDinner(State state);
 bool feasible(State state, int my, int cy);
-void isDinner(State *state);
-void carry(State *state, int m, int c);
 void expand(State state, State *hashmap);
 void solve(State *hashmap);
 

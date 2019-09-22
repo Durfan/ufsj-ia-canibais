@@ -1,64 +1,61 @@
 #include "./includes/main.h"
 
-bool feasible(State state, int my, int cy) {
-	bool feasible = false;
-	int mx = state.m;
-	int cx = state.c;
+State carry(State state, int m, int c) {
+	if (state.b) {
+		state.m -= m;
+		state.c -= c;
+	} else {
+		state.m += m;
+		state.c += c;
+	}
+	state.b = !state.b;
+	return state;
+}
+
+bool feasible(State state, int m, int c) {
+	if (state.b)
+		return (state.m >= m) && (state.c >= c);
+	return (M - state.m >= m) && (C - state.c >= c);
+}
+
+State isDinner(State state) {
+	int mx,cx,my,cy;
 
 	if (state.b) {
-		feasible = (my <= mx) && (cy <= cx);
-	} else 
-		feasible = (mx + my <= M) && (cx + cy <= C);
+		mx = state.m;
+		cx = state.c;
+		my = M - state.m;
+		cy = C - state.c;
+	}
+	else {
+		mx = M - state.m;
+		cx = C - state.c;
+		my = state.m;
+		cy = state.c;
+	}
 
-	return feasible;
-}
-
-void isDinner(State *state) {
-	int mx = state->m;
-	int cx = state->c;
-	int my = state->parent->m - state->m;
-	int cy = state->parent->c - state->c;
 	bool dinner  = (cx > mx) && (mx != 0);
 	bool dessert = (cy > my) && (my != 0);
-	state->dinner = dinner || dessert;
-}
+	state.dinner = dinner || dessert;
 
-void carry(State *state, int m, int c) {
-
-	if (state->b) {
-		state->m -= m;
-		state->c -= c;
-	} else {
-		state->m += m;
-		state->c += c;
-	}
-	state->b = !state->b;
+	return state;
 }
 
 void expand(State state, State *hashmap) {
 	State child;
-	int parent = hashKey(state);
+	int m,c,parent = hashKey(state);
 	int boat[][2] ={{2,0},{0,2},{1,1},{1,0},{0,1}};
-	int m,c;
 
 	for (int i=0; i < 5; i++) {
 		m = boat[i][0];
 		c = boat[i][1];
 		child = state;
+		child.parent = &hashmap[parent];
 		if (feasible(child,m,c)) {
-			child.parent = &hashmap[parent];
-			carry(&child,m,c);
-			isDinner(&child);
+			child = carry(child,m,c);
+			child = isDinner(child);
 			if (!mapped(child,hashmap))
 				addState(child,hashmap);
 		}		
 	}
-}
-
-void solve(State *hashmap) {
-	int *queue = malloc(mapSize()*sizeof(int));
-
-	
-
-	free(queue);
 }
