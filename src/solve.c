@@ -62,3 +62,43 @@ void expand(State state, State *hashmap) {
 		}		
 	}
 }
+
+int stMapp(State *hashmap) {
+	int mapped = 0;
+	for (int i=0; i < mapSize(); i++) {
+		if (hashmap[i].mapped)
+			mapped++;
+	}
+	return mapped;
+}
+
+void gGraph(State *hashmap, int **array) {
+	int parent;
+	for (int i=0; i < mapSize(); i++) {
+		if (hashmap[i].mapped && hashmap[i].parent != NULL) {
+			parent = hashKey(*hashmap[i].parent);
+			array[i][parent] = 1;
+			array[parent][i] = 1;
+		}
+	}
+}
+
+void pGraph(int **array, int size) {
+	bool line = false;
+
+	for (int i=0; i < size; i++) {
+		line = false;
+		
+		for (int j=0; j < size; j++) {
+			if (array[i][j]) {
+				if (!line) {
+					printf(" %d ->", i);
+					line = true;
+				}
+				printf(" %d", j);
+			}
+		}
+		if (line)
+			printf("\n");
+	}
+}

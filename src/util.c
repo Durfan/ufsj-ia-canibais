@@ -1,5 +1,19 @@
 #include "./includes/main.h"
 
+int **iniArray(int n, int m) {
+    int **array = calloc(n,sizeof(int*));
+	assert(array);
+    for (int i=0; i < n; i++)
+		array[i] = calloc(m,sizeof(int));
+    return array;
+}
+
+void delArray(int **array, int n) {
+    for (int i=0 ; i < n ; i++)
+		free(array[i]);
+    free(array);
+}
+
 void prtMap(State *hashmap) {
 
 	for (int i=0; i < mapSize(); i++) {
