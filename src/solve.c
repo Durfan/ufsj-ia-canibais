@@ -1,6 +1,7 @@
 #include "./includes/main.h"
 
 State carry(State state, int m, int c) {
+
 	if (state.b) {
 		state.m -= m;
 		state.c -= c;
@@ -9,10 +10,12 @@ State carry(State state, int m, int c) {
 		state.c += c;
 	}
 	state.b = !state.b;
+
 	return state;
 }
 
 bool feasible(State state, int m, int c) {
+
 	if (state.b)
 		return (state.m >= m) && (state.c >= c);
 	return (M - state.m >= m) && (C - state.c >= c);

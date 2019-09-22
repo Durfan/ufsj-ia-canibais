@@ -12,5 +12,6 @@
 
 #include "struct.h"
 #include "solve.h"
+#include "util.h"
 
 #endif // _MAIN_H
