@@ -17,7 +17,8 @@ int main(void) {
 
    	for (int i=0; i < 5; i++) {
 		for (int j=0; j < hSize; j++) {
-			expand(hashmap[j],hashmap);
+			if (!hashmap[j].dinner)
+				expand(hashmap[j],hashmap);
 		}
 	}
 
