@@ -40,3 +40,78 @@ void prtMap(State *hashmap) {
 	}
 
 }
+
+char *stateInfo(State state, State *hashmap) {
+	int key = hashKey(state);
+	static char text[1024];
+	static char buffer[1024];
+	static char *pnull = "Nope";
+
+	if (hashmap[key].parent == NULL)
+		return pnull;
+
+	if (!hashmap[key].b) {
+		strcpy(text,"(");
+		sprintf(buffer,"%d",hashmap[key].m);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d",hashmap[key].c);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d",hashmap[key].parent->b);
+		strcat(text,buffer);
+		strcat(text,") ");
+	
+		strcat(text,"[");
+		sprintf(buffer,"%d",hashmap[key].parent->m - hashmap[key].m);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d",hashmap[key].parent->c - hashmap[key].c);
+		strcat(text,buffer);
+		strcat(text,"]");
+
+		strcat(text," (");
+		sprintf(buffer,"%d", M - hashmap[key].m);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d", C - hashmap[key].c);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d",hashmap[key].b);
+		strcat(text,buffer);
+		strcat(text,")");
+	}
+	else {
+		strcpy(text,"(");
+		sprintf(buffer,"%d", M - hashmap[key].m);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d", C - hashmap[key].c);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d",hashmap[key].parent->b);
+		strcat(text,buffer);
+		strcat(text,") \u27A1 ");
+
+		strcat(text,"[");
+		sprintf(buffer,"%d",hashmap[key].m - hashmap[key].parent->m);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d",hashmap[key].c - hashmap[key].parent->c);
+		strcat(text,buffer);
+		strcat(text,"]");
+
+		strcat(text,"\u27A1 (");
+		sprintf(buffer,"%d",hashmap[key].m);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d",hashmap[key].c);
+		strcat(text,buffer);
+		strcat(text,",");
+		sprintf(buffer,"%d",hashmap[key].b);
+		strcat(text,buffer);
+		strcat(text,")");
+	}
+
+	return text;
+}
