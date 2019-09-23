@@ -14,5 +14,6 @@
 #include "struct.h"
 #include "solve.h"
 #include "util.h"
+#include "graph.h"
 
 #endif // _MAIN_H

@@ -1,0 +1,36 @@
+digraph {
+	"10"[style=filled,fillcolor=red]
+	"12"[style=filled,fillcolor=red]
+	"13"[style=filled,fillcolor=red]
+	"20"[style=filled,fillcolor=red]
+	"21"[style=filled,fillcolor=red]
+	"23"[style=filled,fillcolor=red]
+	"112"[style=filled,fillcolor=red]
+	"113"[style=filled,fillcolor=red]
+	"121"[style=filled,fillcolor=red]
+	"123"[style=filled,fillcolor=red]
+	"1" -> "102"
+	"1" -> "111"
+	"2" -> "103"
+	"11" -> "112"
+	"11" -> "113"
+	"11" -> "121"
+	"11" -> "122"
+	"22" -> "123"
+	"22" -> "132"
+	"30" -> "131"
+	"102" -> "0"
+	"103" -> "1"
+	"111" -> "10"
+	"122" -> "2"
+	"131" -> "11"
+	"131" -> "20"
+	"132" -> "12"
+	"132" -> "21"
+	"132" -> "30"
+	"133" -> "13"
+	"133" -> "22"
+	"133" -> "23"
+	"133" -> "31"
+	"133" -> "32"
+}

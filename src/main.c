@@ -1,6 +1,7 @@
 #include "./includes/main.h"
 #include "raylib.h"
 
+
 int main(void) {
 
 	const int screenWidth = 670;
@@ -29,6 +30,7 @@ int main(void) {
 
 	int **graph = iniArray(hSize,hSize);
 	gGraph(hashmap,graph);
+	genDot(hashmap,graph);
 	pGraph(graph,hSize);
 
 	SetTargetFPS(30);
