@@ -3,7 +3,6 @@
 
 int **iniArray(int n, int m);
 void delArray(int **array, int n);
-void pGraph(int **graph, int size);
 void prtMap(State *hashmap);
 char *stateInfo(State state, State *hashmap);
 

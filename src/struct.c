@@ -58,16 +58,3 @@ bool mapped(State state, State *hashmap) {
 	int key = hashKey(state);
 	return hashmap[key].mapped;
 }
-
-void gGraph(State *hashmap, int **graph) {
-	int parent;
-	for (int i=0; i < mapSize(); i++) {
-		if (hashmap[i].mapped && hashmap[i].parent != NULL) {
-			parent = hashKey(*hashmap[i].parent);
-			//graph[i][parent] = 1;
-			graph[parent][i] = 1;
-		}
-		else if (hashmap[i].mapped && hashmap[i].parent == NULL)
-			graph[i][i] = 1;
-	}
-}

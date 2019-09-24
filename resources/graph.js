@@ -53,7 +53,3 @@ const gData = {
 	 { target: 133, source: 32 }
 	]
 };
-
-const Graph = ForceGraph()
-	(document.getElementById('graph'))
-  	.graphData(gData);

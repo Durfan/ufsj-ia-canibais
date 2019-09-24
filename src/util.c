@@ -14,24 +14,6 @@ void delArray(int **array, int n) {
     free(array);
 }
 
-void pGraph(int **graph, int size) {
-	bool line;
-	
-	for (int i=0; i < size; i++) {
-		line = false;
-		for (int j=0; j < size; j++) {
-			if (graph[i][j]) {
-				if (!line) {
-					printf(" %d ->", i);
-					line = true;
-				}
-				printf(" %d", j);
-			}
-		}
-		if (line) printf("\n");
-	}
-}
-
 void prtMap(State *hashmap) {
 
 	for (int i=0; i < mapSize(); i++) {

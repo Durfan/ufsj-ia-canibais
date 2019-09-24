@@ -1,5 +1,18 @@
 #include "./includes/main.h"
 
+void gGraph(State *hashmap, int **graph) {
+	int parent;
+	for (int i=0; i < mapSize(); i++) {
+		if (hashmap[i].mapped && hashmap[i].parent != NULL) {
+			parent = hashKey(*hashmap[i].parent);
+			//graph[i][parent] = 1;
+			graph[parent][i] = 1;
+		}
+		else if (hashmap[i].mapped && hashmap[i].parent == NULL)
+			graph[i][i] = 1;
+	}
+}
+
 void genDot(State *hashmap, int **graph) {
 	char *fpout = "./resources/graph.dot";
     FILE *fp = fopen(fpout,"w");
@@ -68,3 +81,20 @@ void genDot(State *hashmap, int **graph) {
 	fclose(fp);
 }
 
+void pGraph(int **graph, int size) {
+	bool line;
+	
+	for (int i=0; i < size; i++) {
+		line = false;
+		for (int j=0; j < size; j++) {
+			if (graph[i][j]) {
+				if (!line) {
+					printf(" %d ->", i);
+					line = true;
+				}
+				printf(" %d", j);
+			}
+		}
+		if (line) printf("\n");
+	}
+}

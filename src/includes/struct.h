@@ -15,6 +15,5 @@ int hashKey(State state);
 int grabKey(int m, int c, int b);
 void addState(State state, State *hashmap);
 bool mapped(State state, State *hashmap);
-void gGraph(State *hashmap, int **graph);
 
 #endif // _STRUCT_H
