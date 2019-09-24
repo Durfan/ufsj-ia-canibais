@@ -1,17 +1,26 @@
 #include "./includes/main.h"
-#include "raylib.h"
+
+static void destroyWindowCb(void);
+static gboolean closeWebViewCb(GtkWidget *window);
 
 
-int main(void) {
+int main(int argc, char **argv) {
 
-	const int screenWidth = 670;
-    const int screenHeight = 670;
-
-    InitWindow(screenWidth, screenHeight, "IA - Missionarios vs. Canibais");
+	static char home[1024];
+	char apath[PATH_MAX];
+    
+	realpath("resources", apath); 
+    printf("\n%s\n", apath);
+    strcpy(home,"file://");
+    strcat(home,apath);
+	strcat(home,"/home.html");
 
 	State start = setState(M,C);
  	State *hashmap = initMap();
 	int stMppd,hSize = mapSize();
+
+	// Initialize GTK+
+    gtk_init(&argc, &argv);
 
 	addState(start,hashmap);
 	expand(start,hashmap);
@@ -33,44 +42,46 @@ int main(void) {
 	genDot(hashmap,graph);
 	pGraph(graph,hSize);
 
-	SetTargetFPS(30);
-	int posx,posy,bloc;
 
-	while (!WindowShouldClose()) {
+	// Create an 800x600 window that will contain the browser instance
+    GtkWidget *main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_default_size(GTK_WINDOW(main_window), 800, 600);
 
-		posx = 1;
-		posy = 10;
-		bloc = 0;
+	// Create a browser instance
+    WebKitWebView *webView = WEBKIT_WEB_VIEW(webkit_web_view_new());
 
-        BeginDrawing();
-		ClearBackground(RAYWHITE);
+	// Put the browser area into the main window
+    gtk_container_add(GTK_CONTAINER(main_window), GTK_WIDGET(webView));
 
-		for (int i=0; i < mapSize(); i++) {
-			if (bloc >= 20) {
-				bloc = 0;
-				posx = 1;
-				posy += 10;
-			}
+	// Set up callbacks so that if either the main window or the browser instance is
+    // closed, the program will exit
+    g_signal_connect(main_window, "destroy", G_CALLBACK(destroyWindowCb), NULL);
+    g_signal_connect(webView, "close", G_CALLBACK(closeWebViewCb), main_window);
 
-			if (hashmap[i].mapped) {
-				if (!hashmap[i].dinner)
-					DrawRectangle(posx*10,posy,9,9,BLUE);
-				else
-					DrawRectangle(posx*10,posy,9,9,RED);
-				//DrawText(stateInfo(hashmap[i],hashmap),200,80,10,BLACK);
-			}
-			else
-				DrawRectangle(posx*10,posy,9,9,LIGHTGRAY);
-			posx++;
-			bloc++;
-		}
-		
-        EndDrawing();
-    }
+	// Load a web page into the browser instance
+    webkit_web_view_load_uri(webView,home);
+
+	// Make sure that when the browser area becomes visible, it will get mouse
+    // and keyboard events
+    gtk_widget_grab_focus(GTK_WIDGET(webView));
+
+    // Make sure the main window and all its contents are visible
+    gtk_widget_show_all(main_window);
+
+    // Run the main GTK+ event loop
+    gtk_main();
 
 	delArray(graph,hSize);
 	free(hashmap);
 
-	CloseWindow();
 	return 0;
+}
+
+static void destroyWindowCb(void) {
+    gtk_main_quit();
+}
+
+static gboolean closeWebViewCb(GtkWidget *window) {
+    gtk_widget_destroy(window);
+    return TRUE;
 }

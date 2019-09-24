@@ -10,7 +10,7 @@ SRC_EXT = c
 # Path to the source directory, relative to the makefile
 SRC_PATH = ./src
 # Space-separated pkg-config libraries used by this project
-LIBS =
+LIBS = gtk+-3.0 webkit2gtk-4.0
 # General compiler flags
 COMPILE_FLAGS = -std=c99 -Wall -Wextra -g
 # Additional release-specific flags
@@ -20,7 +20,7 @@ DCOMPILE_FLAGS = -D DEBUG
 # Add additional include paths
 INCLUDES = -I $(SRC_PATH)
 # General linker settings
-LINK_FLAGS = -lraylib
+LINK_FLAGS =
 # Additional release-specific linker settings
 RLINK_FLAGS =
 # Additional debug-specific linker settings

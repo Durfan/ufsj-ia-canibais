@@ -5,7 +5,6 @@ void genDot(State *hashmap, int **graph) {
     FILE *fp = fopen(fpout,"w");
 	assert(fp);
 
-	State state;
 	bool line;
 	int m,c;
 
@@ -42,12 +41,10 @@ void genDot(State *hashmap, int **graph) {
 			if (graph[i][j]) {
 				switch (hashmap[i].b) {
 				case 0:
-					state = hashmap[i];
 					m = hashmap[j].m - hashmap[i].m;
 					c = hashmap[j].c - hashmap[i].c;
 					break;
 				case 1:
-					state = hashmap[j];
 					m = hashmap[i].m - hashmap[j].m;
 					c = hashmap[i].c - hashmap[j].c;
 					break;
