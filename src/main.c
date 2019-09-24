@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
 	int **graph = iniArray(hSize,hSize);
 	gGraph(hashmap,graph);
 	genDot(hashmap,graph);
+	genViz(hashmap,graph);
 	pGraph(graph,hSize);
 
 	// Initialize GTK+

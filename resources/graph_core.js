@@ -1,3 +1,6 @@
 const Graph = ForceGraph()
 	(document.getElementById('graph'))
-  	.graphData(gData);
+		.graphData(gData)
+		.nodeRelSize(10)
+		.linkDirectionalParticles(1)
+		.linkDirectionalArrowLength(6);

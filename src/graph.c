@@ -68,7 +68,9 @@ void genDot(State *hashmap, int **graph) {
 				}
 
 				if (i != j) {
-					fprintf(fp,"\t\"%d\" -> \"%d\"[label=\"%d,%d\", weight=\"%d,%d\"]\n", i,j,m,c,m,c);
+					fprintf(fp,"\t\"%d\" -> \"%d\"", i,j);
+					fprintf(fp,"[label=\"%d,%d\",", m,c);
+					fprintf(fp," weight=\"%d,%d\"]\n", m,c);
 				}
 			}
 		}
@@ -77,6 +79,81 @@ void genDot(State *hashmap, int **graph) {
 
 
 	fprintf(fp,"}");
+
+	fclose(fp);
+}
+
+void genViz(State *hashmap, int **graph) {
+	char *fpout = "./resources/graph.js";
+    FILE *fp = fopen(fpout,"w");
+	assert(fp);
+
+	bool line;
+	int m,c;
+
+	fprintf(fp,"const gData = {\n");
+	fprintf(fp,"\tnodes: [\n");
+	for (int i=0; i < mapSize(); i++) {
+		if (hashmap[i].mapped) {
+			switch (hashmap[i].b) {
+			case 0:
+				fprintf(fp,"\t{ id: %d, name: \"(", i);
+				fprintf(fp,"%d,", M - hashmap[i].m);
+				fprintf(fp,"%d,", C - hashmap[i].c);
+				fprintf(fp,"%d)", hashmap[i].b);
+				if (hashmap[i].dinner)
+					fprintf(fp,"\", color: \"red\" },\n");
+				else
+					fprintf(fp,"\" },\n");
+				break;
+			case 1:
+				fprintf(fp,"\t{ id: %d, name: \"(", i);
+				fprintf(fp,"%d,", hashmap[i].m);
+				fprintf(fp,"%d,", hashmap[i].c);
+				fprintf(fp,"%d)", hashmap[i].b);
+				if (hashmap[i].dinner)
+					fprintf(fp,"\", color: \"red\" },\n");
+				else
+					fprintf(fp,"\" },\n");
+				break;
+			
+			default:
+				break;
+			}
+		}
+	}
+
+	fprintf(fp,"\t],\n\tlinks: [\n");
+
+	for (int i=0; i < mapSize(); i++) {
+		line = false;
+		for (int j=0; j < mapSize(); j++) {
+			if (graph[i][j]) {
+				switch (hashmap[i].b) {
+				case 0:
+					m = hashmap[j].m - hashmap[i].m;
+					c = hashmap[j].c - hashmap[i].c;
+					break;
+				case 1:
+					m = hashmap[i].m - hashmap[j].m;
+					c = hashmap[i].c - hashmap[j].c;
+					break;
+				
+				default:
+					exit(1);
+					break;
+				}
+
+				if (i != j) {
+					fprintf(fp,"\t{ target: %d, source: %d,", j,i);
+					fprintf(fp," name: \"%d,%d\" },\n", m,c);
+				}
+			}
+		}
+		if (line) printf("\n");
+	}
+
+	fprintf(fp,"\t]\n};");
 
 	fclose(fp);
 }
