@@ -1,6 +1,6 @@
 const gData = {
 	nodes: [
-	{ id: 133, name: "(3,3,1)" },
+	{ id: 133, name: "(3,3,1)", color: "green" },
 	{ id: 132, name: "(3,2,1)" },
 	{ id: 131, name: "(3,1,1)" },
 	{ id: 123, name: "(2,3,1)", color: "red" },
@@ -24,7 +24,7 @@ const gData = {
 	{ id: 10, name: "(2,3,0)", color: "red" },
 	{ id: 2, name: "(3,1,0)" },
 	{ id: 1, name: "(3,2,0)" },
-	{ id: 0, name: "(3,3,0)" },
+	{ id: 0, name: "(0,0,0)", color: "green" },
 	],
 	links: [
 	{ target: 102, source: 1, name: "0,1" },

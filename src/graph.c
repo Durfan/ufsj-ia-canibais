@@ -97,24 +97,42 @@ void genViz(State *hashmap, int **graph) {
 		if (hashmap[i].mapped) {
 			switch (hashmap[i].b) {
 			case 0:
-				fprintf(fp,"\t{ id: %d, name: \"(", i);
-				fprintf(fp,"%d,", M - hashmap[i].m);
-				fprintf(fp,"%d,", C - hashmap[i].c);
-				fprintf(fp,"%d)", hashmap[i].b);
-				if (hashmap[i].dinner)
-					fprintf(fp,"\", color: \"red\" },\n");
-				else
-					fprintf(fp,"\" },\n");
+				if (hashmap[i].m == 0 && hashmap[i].c == 0) {
+					fprintf(fp,"\t{ id: %d, name: \"(", i);
+					fprintf(fp,"%d,", hashmap[i].m);
+					fprintf(fp,"%d,", hashmap[i].c);
+					fprintf(fp,"%d)", hashmap[i].b);
+					fprintf(fp,"\", color: \"green\" },\n");
+				}
+				else {
+					fprintf(fp,"\t{ id: %d, name: \"(", i);
+					fprintf(fp,"%d,", M - hashmap[i].m);
+					fprintf(fp,"%d,", C - hashmap[i].c);
+					fprintf(fp,"%d)", hashmap[i].b);
+					if (hashmap[i].dinner)
+						fprintf(fp,"\", color: \"red\" },\n");
+					else
+						fprintf(fp,"\" },\n");
+				}
 				break;
 			case 1:
-				fprintf(fp,"\t{ id: %d, name: \"(", i);
-				fprintf(fp,"%d,", hashmap[i].m);
-				fprintf(fp,"%d,", hashmap[i].c);
-				fprintf(fp,"%d)", hashmap[i].b);
-				if (hashmap[i].dinner)
-					fprintf(fp,"\", color: \"red\" },\n");
-				else
-					fprintf(fp,"\" },\n");
+				if (hashmap[i].m == M && hashmap[i].c == C) {
+					fprintf(fp,"\t{ id: %d, name: \"(", i);
+					fprintf(fp,"%d,", hashmap[i].m);
+					fprintf(fp,"%d,", hashmap[i].c);
+					fprintf(fp,"%d)", hashmap[i].b);
+					fprintf(fp,"\", color: \"green\" },\n");
+				}
+				else {
+					fprintf(fp,"\t{ id: %d, name: \"(", i);
+					fprintf(fp,"%d,", hashmap[i].m);
+					fprintf(fp,"%d,", hashmap[i].c);
+					fprintf(fp,"%d)", hashmap[i].b);
+					if (hashmap[i].dinner)
+						fprintf(fp,"\", color: \"red\" },\n");
+					else
+						fprintf(fp,"\" },\n");
+				}
 				break;
 			
 			default:
