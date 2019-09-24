@@ -93,7 +93,7 @@ void genViz(State *hashmap, int **graph) {
 
 	fprintf(fp,"const gData = {\n");
 	fprintf(fp,"\tnodes: [\n");
-	for (int i=0; i < mapSize(); i++) {
+	for (int i=mapSize(); i >= 0; i--) {
 		if (hashmap[i].mapped) {
 			switch (hashmap[i].b) {
 			case 0:
