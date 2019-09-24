@@ -9,9 +9,7 @@ Três missionários e três canibais estão em um lado de um rio, juntamente com
 
 ## Saídas
 
-[./resources/graph.dot](https://github.com/Durfan/ufsj-ia-canibais/blob/master/resources/graph.dot)
-
-* `./resources/graph.dot` [Graphviz Format](https://www.graphviz.org/)
+[./resources/graph.dot](https://github.com/Durfan/ufsj-ia-canibais/blob/master/resources/graph.dot) -> [Graphviz Format](https://www.graphviz.org/) 
 
 ## Force Graph API
 
