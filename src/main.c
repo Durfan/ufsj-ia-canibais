@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
 
 	// Create an 800x600 window that will contain the browser instance
     mainWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title(GTK_WINDOW(mainWindow), "TP IA - Missionarios vs. Canibais");
+	gtk_window_set_title(GTK_WINDOW(mainWindow), "Missionarios vs. Canibais");
 	gtk_window_set_default_size(GTK_WINDOW(mainWindow), 800, 600);
 	gtk_window_set_position(GTK_WINDOW(mainWindow), GTK_WIN_POS_CENTER);
 

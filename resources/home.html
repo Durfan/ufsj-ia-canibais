@@ -1,31 +1,33 @@
-<head>
-  <style> 
-    body { margin: 0; }
-    #cleric img {
-      position: fixed; bottom: 0px; right: 0px;
-    }
-    #canibal img {
-      position: fixed; bottom: 0px; left: 0px;
-    }
-  </style>
-  <script src="force-graph.min.js"></script>
-</head>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+      body { margin: 0px !important; }
+    </style>
+    <script src="js/force-graph.min.js"></script>
+    <title>Missionarios vs. Canibais</title>
+  </head>
 
-<body>
+  <body>
 
-  <div id="canibal">
-      <img src="canibal.png"/>
-  </div>
+    <div class="container-fluid">
+  
+      <img class="fixed-bottom" src="img/canibal.png">
+      <img class="fixed-bottom ml-5" src="img/cleric.png">
+  
+      <div id="graph"></div>
 
-  <div id="cleric">
-    <img src="cleric.png" />
-  </div>
+    </div>
 
-  <div id="graph"></div>
-
-  <script src="graph.js"></script>
-  <script src="graph_core.js"></script>
-</body>
+    <script src="graph.js"></script>
+    <script src="graph_core.js"></script>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
 
 
 
