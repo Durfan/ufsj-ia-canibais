@@ -22,5 +22,6 @@
 #include "util.h"
 #include "graph.h"
 #include "stack.h"
+#include "search.h"
 
 #endif // _MAIN_H
