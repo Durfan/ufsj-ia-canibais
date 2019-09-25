@@ -21,5 +21,6 @@
 #include "solve.h"
 #include "util.h"
 #include "graph.h"
+#include "stack.h"
 
 #endif // _MAIN_H
