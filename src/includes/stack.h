@@ -13,7 +13,7 @@ typedef struct stack_t {
 
 Stack *initStack();
 void pshStack(Stack *stack, int key);
-void popStack(Stack *stack);
+int popStack(Stack *stack);
 void prtStack(Stack *stack);
 bool stkEmpty(Stack *stack);
 void delStack(Stack *stack);

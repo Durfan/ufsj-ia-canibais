@@ -20,14 +20,15 @@ void pshStack(Stack *stack, int key) {
 	stack->size++;
 }
 
-void popStack(Stack *stack) {
+int popStack(Stack *stack) {
 	if (stack->top == NULL)
 		return;
-
 	Node *delNode = stack->top;
 	stack->top = stack->top->next;
 	stack->size--;
+	int key = delNode->key;
 	free(delNode);
+	return key;
 }
 
 void prtStack(Stack *stack){

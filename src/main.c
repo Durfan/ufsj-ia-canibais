@@ -10,11 +10,11 @@ int main(int argc, char **argv) {
 	static char home[1024];
 	static char icon[1024];
 	char apath[PATH_MAX];
-    
-	realpath("resources", apath); 
+
+	realpath("resources", apath);
 	printf(" DEBUG output -----\n");
     printf(" Resources Path: %s\n\n", apath);
-    
+
 	strcpy(home,"file://");
     strcat(home,apath);
 	strcat(home,"/home.html");
@@ -27,7 +27,6 @@ int main(int argc, char **argv) {
 
 	addState(start,hashmap);
 	expand(start,hashmap);
-
    	for (int i=0; i < 5; i++) {
 		for (int j=0; j < MAPSIZE; j++) {
 			if (!hashmap[j].dinner) {
@@ -40,11 +39,52 @@ int main(int argc, char **argv) {
 
 	int stMppd = stMapp(hashmap);
 	printf("\n Estados Mapeados: %d\n\n", stMppd);
-
 	gGraph(hashmap,graph);
 	genDot(hashmap,graph);
 	genViz(hashmap,graph);
 	prtGraph(graph);
+
+	// METODOS DE BUSCA IMPLEMENTADOS
+
+	printf("\n---- Busca em profundidade:\n\n");
+	State *hashma2p = initMap();
+	int **grap2h = iniGraph();
+	grap2h = depthFirstSearch(start, hashma2p);
+	prtGraph(grap2h);
+	free(hashma2p);
+	delGraph(grap2h);
+
+
+	printf("\n---- Busca em Largura:\n\n");
+	State end; end.m = 0; end.c = 0; end.b = 0;
+	State *hashma3p = initMap();
+	int **grap3h = iniGraph();
+	grap3h = breadthFirstSearch(start, hashma3p, end);
+	prtGraph(grap3h);
+	free(hashma3p);
+	delGraph(grap3h);
+
+
+	printf("\n Busca em largura bidirecional:\n\n");
+	State *hashma4p = initMap();
+	int **grap4h = iniGraph();
+	State *hashma4p2 = initMap();
+	grap4h = bidirectionalBredthSearch(start, end, hashma4p, hashma4p2);
+	prtGraph(grap4h);
+	free(hashma4p);
+	delGraph(grap4h);
+
+
+
+	printf("\n Busca em profundidade limitada - limit = 8:\n\n");
+	State *hashma5p = initMap();
+	int **grap5h = iniGraph();
+	grap5h = limitedDepthSearch(start, hashma5p, 8);
+	prtGraph(grap5h);
+	delGraph(grap5h);
+	free(hashma5p);
+
+
 
 	// Initialize GTK+
     gtk_init(&argc, &argv);
@@ -86,7 +126,7 @@ int main(int argc, char **argv) {
     // Run the main GTK+ event loop
     gtk_main();
 
-	delGraph(graph);
+//	delGraph(graph);
 	free(hashmap);
 
 	return 0;
@@ -102,11 +142,11 @@ static gboolean closeWebViewCb(GtkWidget *window) {
 }
 
 GdkPixbuf *create_pixbuf(const gchar *filename) {
-    
+
    GdkPixbuf *pixbuf;
    GError *error = NULL;
    pixbuf = gdk_pixbuf_new_from_file(filename, &error);
-   
+
    if (!pixbuf) {
       fprintf(stderr, "%s\n", error->message);
       g_error_free(error);
