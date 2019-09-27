@@ -8,6 +8,7 @@ State *initMap(void) {
 		hashmap[i].m = -1;
 		hashmap[i].c = -1;
 		hashmap[i].b = -1;
+		hashmap[i].src = -1;
 		hashmap[i].dinner = false;
 		hashmap[i].mapped = false;
 		hashmap[i].parent = NULL;
@@ -21,6 +22,7 @@ State setState(int m, int c) {
 	state.m = m;
 	state.c = c;
 	state.b = 1;
+	state.src = -1;
 	state.dinner = false;
 	state.mapped = false;
 	state.parent = NULL;
@@ -42,6 +44,7 @@ void addState(State state, State *hashmap) {
 	hashmap[key].m = state.m;
 	hashmap[key].c = state.c;
 	hashmap[key].b = state.b;
+	hashmap[key].src = state.src;
 	hashmap[key].mapped = true;
 	hashmap[key].dinner = state.dinner;
 	hashmap[key].parent = state.parent;

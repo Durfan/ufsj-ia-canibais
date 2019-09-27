@@ -3,6 +3,7 @@
 
 typedef struct state_t {
 	int m,c,b;
+	int src;
 	bool mapped;
 	bool dinner;
 	struct state_t *parent;

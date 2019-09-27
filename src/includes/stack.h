@@ -1,18 +1,21 @@
+#ifndef _STACK_H
+#define _STACK_H
 
-
-typedef struct cell_t{
+typedef struct node_t {
 	int key;
-	struct cell_t *next;
-} Cell;
+	struct node_t *next;
+} Node;
 
-typedef struct {
-	Cell *first, *last;
+typedef struct stack_t {
+	int size;
+	struct node_t *top;
 } Stack;
 
 Stack *initStack();
-int push(Stack *stack);
-void pop(Stack *stack, int item);
+void pshStack(Stack *stack, int key);
+void popStack(Stack *stack);
 void prtStack(Stack *stack);
-int stackIsEmpty(Stack *stack);
-int itemExist(Stack *stack, int item);
-void destroyStack(Stack *stack);
+bool stkEmpty(Stack *stack);
+void delStack(Stack *stack);
+
+#endif // _STACK_H

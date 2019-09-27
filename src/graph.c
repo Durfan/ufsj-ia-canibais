@@ -1,5 +1,37 @@
 #include "./includes/main.h"
 
+int **iniGraph(void) {
+    int **graph = calloc(MAPSIZE,sizeof(int*));
+	assert(graph);
+    for (int i=0; i < MAPSIZE; i++)
+		graph[i] = calloc(MAPSIZE,sizeof(int));
+    return graph;
+}
+
+void delGraph(int **graph) {
+    for (int i=0 ; i < MAPSIZE ; i++)
+		free(graph[i]);
+    free(graph);
+}
+
+void prtGraph(int **graph) {
+	bool line;
+	
+	for (int i=0; i < MAPSIZE; i++) {
+		line = false;
+		for (int j=0; j < MAPSIZE; j++) {
+			if (graph[i][j]) {
+				if (!line) {
+					printf(" %d ->", i);
+					line = true;
+				}
+				printf(" %d", j);
+			}
+		}
+		if (line) printf("\n");
+	}
+}
+
 void gGraph(State *hashmap, int **graph) {
 	int parent;
 	for (int i=0; i < MAPSIZE; i++) {
@@ -174,22 +206,4 @@ void genViz(State *hashmap, int **graph) {
 	fprintf(fp,"\t]\n};");
 
 	fclose(fp);
-}
-
-void pGraph(int **graph, int size) {
-	bool line;
-	
-	for (int i=0; i < size; i++) {
-		line = false;
-		for (int j=0; j < size; j++) {
-			if (graph[i][j]) {
-				if (!line) {
-					printf(" %d ->", i);
-					line = true;
-				}
-				printf(" %d", j);
-			}
-		}
-		if (line) printf("\n");
-	}
 }

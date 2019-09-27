@@ -1,78 +1,63 @@
 #include "./includes/main.h"
 
+Stack *initStack(void) {
+	Stack *stack = malloc(sizeof(Stack));
+	assert(stack);
 
-Stack *initStack(){
-	Stack *stack = (Stack*)malloc(sizeof(Stack));
-	stack->first = NULL;
-	stack->last = NULL;
+	stack->top = NULL;
+	stack->size = 0;
+
 	return stack;
 }
 
+void pshStack(Stack *stack, int key) {
+	Node *node = malloc(sizeof(Node));
+	assert(node);
 
-int push(Stack *stack){
-	int value;
-	if(stack->first == NULL){
-		printf("\nEmpty Stack.\n");
-		return -1;
-	}
-	Cell *aux = stack->first;
-	value = aux->key;
-	stack->first = aux->next;
-	free(aux);
-	return value;
+	node->key = key;
+	node->next = stack->top;
+	stack->top = node;
+	stack->size++;
 }
 
+void popStack(Stack *stack) {
+	if (stack->top == NULL)
+		return;
 
-void pop(Stack *stack, int item){
-	Cell *newHead = (Cell*)malloc(sizeof(Cell));
-	if(stack->first == NULL){
-		stack->last = newHead;
-	}
-	newHead->next = stack->first;
-	newHead->key = item;
-	stack->first = newHead;
+	Node *delNode = stack->top;
+	stack->top = stack->top->next;
+	stack->size--;
+	free(delNode);
 }
-
 
 void prtStack(Stack *stack){
-	if(stack->first == NULL){
-		printf("\nEmpty Stack.\n");
+	if (stack->top == NULL)
+		return;
+
+	Node *node = stack->top;
+	printf("STACK: [");
+	while (node != NULL){
+		printf(" %d,", node->key);
+		node = node->next;
+	}
+	printf(" ]\n");
+}
+
+bool stkEmpty(Stack *stack) {
+	return (stack->top == NULL);
+}
+
+void delStack(Stack *stack) {
+	if (stack->top == NULL) {
+		free(stack);
 		return;
 	}
-	Cell *cell = stack->first;
-	printf("\nSTACK: [");
-	while(cell != NULL){
-		printf("%d  ", cell->key);
-		cell = cell->next;
-	}
-	printf("]\n");
-}
 
-
-int stackIsEmpty(Stack *stack){
-	if(stack->first == NULL) return 1;
-	else return 0;
-}
-
-
-int itemExist(Stack *stack, int item){
-	Cell *cell = stack->first;
-	while(cell != NULL){
-		if(cell->key == item){
-			return 1;
-		}
-		cell = cell->next;
-	}
-	return 0;
-}
-
-void destroyStack(Stack *stack){
-
-	Cell *aux = stack->first;
-	Cell *aux2;
-	while(aux != NULL){
-		aux2 = aux->next;
-		free(aux);
-		aux = aux2;
-	}
+	Node *del;
+	while (stack->top != NULL) {
+        del = stack->top;
+        stack->top = stack->top->next;
+        free(del);
+    }
+    free(stack);
 }

@@ -57,6 +57,8 @@ void expand(State state, State *hashmap) {
 		if (feasible(child,m,c)) {
 			child = carry(child,m,c);
 			child = isDinner(child);
+			child.src = parent;
+			printf(" %d", child.src);
 			if (!mapped(child,hashmap))
 				addState(child,hashmap);
 		}		
