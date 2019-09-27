@@ -1,13 +1,12 @@
 
 
-typedef struct{
+typedef struct cell_t{
 	int key;
-	struct Cell *next;
+	struct cell_t *next;
 } Cell;
 
 typedef struct {
-    struct Cell *first;
-	struct Cell *last;
+	Cell *first, *last;
 } Stack;
 
 Stack *initStack();
@@ -16,3 +15,4 @@ void pop(Stack *stack, int item);
 void prtStack(Stack *stack);
 int stackIsEmpty(Stack *stack);
 int itemExist(Stack *stack, int item);
+void destroyStack(Stack *stack);

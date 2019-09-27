@@ -9,7 +9,6 @@ Stack *initStack(){
 }
 
 
-
 int push(Stack *stack){
 	int value;
 	if(stack->first == NULL){
@@ -34,6 +33,7 @@ void pop(Stack *stack, int item){
 	stack->first = newHead;
 }
 
+
 void prtStack(Stack *stack){
 	if(stack->first == NULL){
 		printf("\nEmpty Stack.\n");
@@ -48,10 +48,12 @@ void prtStack(Stack *stack){
 	printf("]\n");
 }
 
+
 int stackIsEmpty(Stack *stack){
 	if(stack->first == NULL) return 1;
 	else return 0;
 }
+
 
 int itemExist(Stack *stack, int item){
 	Cell *cell = stack->first;
@@ -62,4 +64,15 @@ int itemExist(Stack *stack, int item){
 		cell = cell->next;
 	}
 	return 0;
+}
+
+void destroyStack(Stack *stack){
+
+	Cell *aux = stack->first;
+	Cell *aux2;
+	while(aux != NULL){
+		aux2 = aux->next;
+		free(aux);
+		aux = aux2;
+	}
 }
