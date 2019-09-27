@@ -6,6 +6,7 @@
 #define M 3 // Missionaries
 #define C 3 // Cannibals
 #define B 1 // Lado inicial
+#define MAPSIZE 32
 
 #include <stdio.h>
 #include <stdlib.h>

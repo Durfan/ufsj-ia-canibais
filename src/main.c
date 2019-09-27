@@ -23,28 +23,28 @@ int main(int argc, char **argv) {
 
 	State start = setState(M,C);
  	State *hashmap = initMap();
-	int stMppd,hSize = mapSize();
 
 	addState(start,hashmap);
 	expand(start,hashmap);
 
    	for (int i=0; i < 5; i++) {
-		for (int j=0; j < hSize; j++) {
-			if (!hashmap[j].dinner)
+		for (int j=0; j < MAPSIZE; j++) {
+			if (!hashmap[j].dinner) {
 				expand(hashmap[j],hashmap);
+			}
 		}
 	}
 
 	prtMap(hashmap);
 
-	stMppd = stMapp(hashmap);
+	int stMppd = stMapp(hashmap);
 	printf("\n Estados Mapeados: %d\n\n", stMppd);
 
-	int **graph = iniArray(hSize,hSize);
+	int **graph = iniArray(MAPSIZE,MAPSIZE);
 	gGraph(hashmap,graph);
 	genDot(hashmap,graph);
 	genViz(hashmap,graph);
-	pGraph(graph,hSize);
+	pGraph(graph,MAPSIZE);
 
 	// Initialize GTK+
     gtk_init(&argc, &argv);
@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
     // Run the main GTK+ event loop
     gtk_main();
 
-	delArray(graph,hSize);
+	delArray(graph,MAPSIZE);
 	free(hashmap);
 
 	return 0;

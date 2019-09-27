@@ -65,7 +65,7 @@ void expand(State state, State *hashmap) {
 
 int stMapp(State *hashmap) {
 	int mapped = 0;
-	for (int i=0; i < mapSize(); i++) {
+	for (int i=0; i < MAPSIZE; i++) {
 		if (hashmap[i].mapped)
 			mapped++;
 	}

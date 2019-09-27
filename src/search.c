@@ -44,7 +44,7 @@ int **depthSearch(State start, State *hashmap){
     addState(start, hashmap);
     expandAndStack(start, hashmap, stack);
 
-    int actualNode, hSize = mapSize();
+    int actualNode, hSize = MAPSIZE;
 	int **graph = iniArray(hSize,hSize);
 	while(!stackIsEmpty(stack)){
         actualNode = push(stack);

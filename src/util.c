@@ -16,7 +16,7 @@ void delArray(int **array, int n) {
 
 void prtMap(State *hashmap) {
 
-	for (int i=0; i < mapSize(); i++) {
+	for (int i=0; i < MAPSIZE; i++) {
 		if (hashmap[i].mapped && hashmap[i].parent != NULL) {
 			printf(" %03d: (", i);
 			switch (hashmap[i].b) {

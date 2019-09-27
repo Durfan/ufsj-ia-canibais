@@ -1,10 +1,10 @@
 #include "./includes/main.h"
 
 State *initMap(void) {
-	State *hashmap = malloc(mapSize()*sizeof(State));
+	State *hashmap = malloc(MAPSIZE*sizeof(State));
 	assert(hashmap);
 
-	for (int i=0; i < mapSize(); i++) {
+	for (int i=0; i < MAPSIZE; i++) {
 		hashmap[i].m = -1;
 		hashmap[i].c = -1;
 		hashmap[i].b = -1;
@@ -27,21 +27,14 @@ State setState(int m, int c) {
 	return state;
 }
 
-int mapSize(void) {
-	static short int size;
-	size = grabKey(M,C,B)+1;
-	return size;
-}
-
 int hashKey(State state) {
-	int m = state.m;
-	int c = state.c;
-	int b = state.b;
-	return (m*10+c+100*b);
-}
-
-int grabKey(int m, int c, int b) {
-	return (m*10+c+100*b);
+	char buffer[4];
+	sprintf(buffer, "%d%d", state.m*2,state.c);
+	int hash = atoi(buffer);
+	hash |= 0x010;
+	hash %= 0x010;
+	hash += 0x010 * state.b;
+	return hash;
 }
 
 void addState(State state, State *hashmap) {

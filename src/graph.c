@@ -2,7 +2,7 @@
 
 void gGraph(State *hashmap, int **graph) {
 	int parent;
-	for (int i=0; i < mapSize(); i++) {
+	for (int i=0; i < MAPSIZE; i++) {
 		if (hashmap[i].mapped && hashmap[i].parent != NULL) {
 			parent = hashKey(*hashmap[i].parent);
 			//graph[i][parent] = 1;
@@ -22,7 +22,7 @@ void genDot(State *hashmap, int **graph) {
 	int m,c;
 
 	fprintf(fp,"digraph {\n");
-	for (int i=0; i < mapSize(); i++) {
+	for (int i=0; i < MAPSIZE; i++) {
 		if (hashmap[i].mapped) {
 			switch (hashmap[i].b) {
 			case 0:
@@ -48,9 +48,9 @@ void genDot(State *hashmap, int **graph) {
 			fprintf(fp,"\t\"%d\"[style=filled,fillcolor=red]\n", i);
 	}
 
-	for (int i=0; i < mapSize(); i++) {
+	for (int i=0; i < MAPSIZE; i++) {
 		line = false;
-		for (int j=0; j < mapSize(); j++) {
+		for (int j=0; j < MAPSIZE; j++) {
 			if (graph[i][j]) {
 				switch (hashmap[i].b) {
 				case 0:
@@ -93,7 +93,7 @@ void genViz(State *hashmap, int **graph) {
 
 	fprintf(fp,"const gData = {\n");
 	fprintf(fp,"\tnodes: [\n");
-	for (int i=mapSize(); i >= 0; i--) {
+	for (int i=MAPSIZE; i >= 0; i--) {
 		if (hashmap[i].mapped) {
 			switch (hashmap[i].b) {
 			case 0:
@@ -143,9 +143,9 @@ void genViz(State *hashmap, int **graph) {
 
 	fprintf(fp,"\t],\n\tlinks: [\n");
 
-	for (int i=0; i < mapSize(); i++) {
+	for (int i=0; i < MAPSIZE; i++) {
 		line = false;
-		for (int j=0; j < mapSize(); j++) {
+		for (int j=0; j < MAPSIZE; j++) {
 			if (graph[i][j]) {
 				switch (hashmap[i].b) {
 				case 0:
