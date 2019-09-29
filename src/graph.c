@@ -43,9 +43,12 @@ void gGraph(State *hashmap, int **graph) {
 	}
 }
 
-void genDot(State *hashmap, int **graph) {
-	char *fpout = "./resources/graph.dot";
-    FILE *fp = fopen(fpout,"w");
+void genDot(State *hashmap, int **graph, char *file) {
+	char output[0x100];
+	strcpy(output,"./resources/graphs/");
+	strcat(output,file);
+	strcat(output,".dot");
+    FILE *fp = fopen(output,"w");
 	assert(fp);
 
 	bool line;
@@ -113,9 +116,12 @@ void genDot(State *hashmap, int **graph) {
 	fclose(fp);
 }
 
-void genViz(State *hashmap, int **graph) {
-	char *fpout = "./resources/graph.js";
-    FILE *fp = fopen(fpout,"w");
+void genViz(State *hashmap, int **graph, char *file) {
+	char output[0x100];
+	strcpy(output,"./resources/graphs/");
+	strcat(output,file);
+	strcat(output,".js");
+    FILE *fp = fopen(output,"w");
 	assert(fp);
 
 	bool line;

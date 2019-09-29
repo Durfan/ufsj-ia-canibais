@@ -2,7 +2,7 @@
 
 exe() { echo "${@/eval/}";"$@"; }
 
-OUTDIR="./resources/"
+OUTDIR="./resources/graphs/"
 
 for filename in ${OUTDIR}*.dot; do
     exe eval "dot -Tsvg ${filename} > ${filename%.*}.svg"

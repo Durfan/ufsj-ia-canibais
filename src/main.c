@@ -19,18 +19,10 @@ int main(int argc, char **argv) {
     strcat(home,apath);
 	strcat(home,"/home.html");
 	strcpy(icon,apath);
-    strcat(icon,"/icon.png");
+    strcat(icon,"/img/icon.png");
 
-	State start = setState(M,C);
- 	State *hashmap = initMap();
-
-	//largura(start,hashmap);
-	profund(start,hashmap);
-
-	prtMap(hashmap);
-
-	int stMppd = stMapp(hashmap);
-	printf("\n Estados Mapeados: %d\n\n", stMppd);
+	largura();
+	profund();
 
 	// Initialize GTK+
     gtk_init(&argc, &argv);
@@ -71,8 +63,6 @@ int main(int argc, char **argv) {
 
     // Run the main GTK+ event loop
     gtk_main();
-
-	free(hashmap);
 
 	return 0;
 }

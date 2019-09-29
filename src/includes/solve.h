@@ -5,8 +5,8 @@ State carry(State state, int m, int c);
 State isDinner(State state);
 bool feasible(State state, int my, int cy);
 void expand(State state, State *hashmap, Deque *deque, int **graph);
-void largura(State state, State *hashmap);
-void profund(State state, State *hashmap);
+void largura(void);
+void profund(void);
 int metrica(bool count);
 int stMapp(State *hashmap);
 

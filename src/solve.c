@@ -69,12 +69,15 @@ void expand(State state, State *hashmap, Deque *deque, int **graph) {
 	}
 }
 
-void largura(State state, State *hashmap) {
+void largura(void) {
+	State *hashmap = initMap();
 	Deque *deque = dqcreate();
 	int **graph = iniGraph();
 
-	addState(state,hashmap);
-	dqpshHead(deque,hashKey(state));
+	State start = setState(M,C);
+	addState(start,hashmap);
+
+	dqpshHead(deque,hashKey(start));
 	State visitado;
 
 	while (!dqEmpty(deque)) {
@@ -87,19 +90,27 @@ void largura(State state, State *hashmap) {
 	printf(" Visitados -> %02d\n", metrica(false));
 
 	prtGraph(graph);
-	genDot(hashmap,graph);
-	genViz(hashmap,graph);
+	prtMap(hashmap);
+	genDot(hashmap,graph,"largura");
+	genViz(hashmap,graph,"largura");
+
+	int stMppd = stMapp(hashmap);
+	printf("\n Estados Mapeados: %d\n\n", stMppd);
 
 	dqclr(deque);
 	delGraph(graph);
+	free(hashmap);
 }
 
-void profund(State state, State *hashmap) {
+void profund(void) {
+	State *hashmap = initMap();
 	Deque *deque = dqcreate();
 	int **graph = iniGraph();
 
-	addState(state,hashmap);
-	dqpshHead(deque,hashKey(state));
+	State start = setState(M,C);
+	addState(start,hashmap);
+
+	dqpshHead(deque,hashKey(start));
 	State visitado;
 
 	while (!dqEmpty(deque)) {
@@ -112,11 +123,16 @@ void profund(State state, State *hashmap) {
 	printf(" Visitados -> %02d\n", metrica(false));
 
 	prtGraph(graph);
-	genDot(hashmap,graph);
-	genViz(hashmap,graph);
+	prtMap(hashmap);
+	genDot(hashmap,graph,"profund");
+	genViz(hashmap,graph,"profund");
+
+	int stMppd = stMapp(hashmap);
+	printf("\n Estados Mapeados: %d\n\n", stMppd);
 
 	dqclr(deque);
 	delGraph(graph);
+	free(hashmap);
 }
 
 int metrica(bool count) {
