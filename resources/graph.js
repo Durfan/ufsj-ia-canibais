@@ -24,7 +24,7 @@ const gData = {
 	{ id: 4, name: "(2,3,0)", color: "red" },
 	{ id: 2, name: "(3,1,0)" },
 	{ id: 1, name: "(3,2,0)" },
-	{ id: 0, name: "(0,0,0)", color: "green" },
+	{ id: 0, name: "(3,3,0)", color: "green" },
 	],
 	links: [
 	{ target: 18, source: 1, name: "0,1" },

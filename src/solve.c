@@ -44,25 +44,69 @@ State isDinner(State state) {
 	return state;
 }
 
-void expand(State state, State *hashmap) {
-	State child;
-	int m,c,parent = hashKey(state);
-	int boat[][2] ={{2,0},{0,2},{1,1},{1,0},{0,1}};
+void expand(State state, State *hashmap, Deque *deque, int **graph) {
+
+	State child = state;
+	if (child.dinner || !hashKey(state)) return;
+
+	int m,c,boat[][2] = { {2,0},{0,2},{1,1},{1,0},{0,1} };
 
 	for (int i=0; i < 5; i++) {
 		m = boat[i][0];
 		c = boat[i][1];
 		child = state;
-		child.parent = &hashmap[parent];
+		child.deep++;
 		if (feasible(child,m,c)) {
 			child = carry(child,m,c);
+			child.src = hashKey(state);
 			child = isDinner(child);
-			child.src = parent;
-			printf(" %d", child.src);
-			if (!mapped(child,hashmap))
+			if (!mapped(child,hashmap)) {
+				graph[child.src][hashKey(child)] = 1;
 				addState(child,hashmap);
-		}		
+				dqpshTail(deque,hashKey(child));
+			}
+		}
 	}
+}
+
+void largura(State state, State *hashmap) {
+	Deque *deque = dqcreate();
+	int **graph = iniGraph();
+
+	addState(state,hashmap);
+	dqpshHead(deque,hashKey(state));
+	State visitado;
+
+	while (!dqEmpty(deque)) {
+		visitado = hashmap[dqpopHead(deque)];
+		expand(visitado,hashmap,deque,graph);
+	}
+
+	prtGraph(graph);
+	genDot(hashmap,graph);
+	genViz(hashmap,graph);
+
+	delGraph(graph);
+}
+
+void profund(State state, State *hashmap) {
+	Deque *deque = dqcreate();
+	int **graph = iniGraph();
+
+	addState(state,hashmap);
+	dqpshHead(deque,hashKey(state));
+	State visitado;
+
+	while (!dqEmpty(deque)) {
+		visitado = hashmap[dqpopTail(deque)];
+		expand(visitado,hashmap,deque,graph);
+	}
+
+	prtGraph(graph);
+	genDot(hashmap,graph);
+	genViz(hashmap,graph);
+
+	delGraph(graph);
 }
 
 int stMapp(State *hashmap) {

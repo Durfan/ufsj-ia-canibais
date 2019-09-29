@@ -34,14 +34,12 @@ void prtGraph(int **graph) {
 
 void gGraph(State *hashmap, int **graph) {
 	int parent;
+
 	for (int i=0; i < MAPSIZE; i++) {
-		if (hashmap[i].mapped && hashmap[i].parent != NULL) {
-			parent = hashKey(*hashmap[i].parent);
-			//graph[i][parent] = 1;
+		if (hashmap[i].mapped && hashmap[i].src != -1) {
+			parent = hashmap[i].src;
 			graph[parent][i] = 1;
 		}
-		else if (hashmap[i].mapped && hashmap[i].parent == NULL)
-			graph[i][i] = 1;
 	}
 }
 
@@ -125,51 +123,27 @@ void genViz(State *hashmap, int **graph) {
 
 	fprintf(fp,"const gData = {\n");
 	fprintf(fp,"\tnodes: [\n");
-	for (int i=MAPSIZE; i >= 0; i--) {
+	for (int i=MAPSIZE-1; i >= 0; i--) {
 		if (hashmap[i].mapped) {
-			switch (hashmap[i].b) {
-			case 0:
-				if (hashmap[i].m == 0 && hashmap[i].c == 0) {
-					fprintf(fp,"\t{ id: %d, name: \"(", i);
-					fprintf(fp,"%d,", hashmap[i].m);
-					fprintf(fp,"%d,", hashmap[i].c);
-					fprintf(fp,"%d)", hashmap[i].b);
-					fprintf(fp,"\", color: \"green\" },\n");
-				}
-				else {
-					fprintf(fp,"\t{ id: %d, name: \"(", i);
-					fprintf(fp,"%d,", M - hashmap[i].m);
-					fprintf(fp,"%d,", C - hashmap[i].c);
-					fprintf(fp,"%d)", hashmap[i].b);
-					if (hashmap[i].dinner)
-						fprintf(fp,"\", color: \"red\" },\n");
-					else
-						fprintf(fp,"\" },\n");
-				}
-				break;
-			case 1:
-				if (hashmap[i].m == M && hashmap[i].c == C) {
-					fprintf(fp,"\t{ id: %d, name: \"(", i);
-					fprintf(fp,"%d,", hashmap[i].m);
-					fprintf(fp,"%d,", hashmap[i].c);
-					fprintf(fp,"%d)", hashmap[i].b);
-					fprintf(fp,"\", color: \"green\" },\n");
-				}
-				else {
-					fprintf(fp,"\t{ id: %d, name: \"(", i);
-					fprintf(fp,"%d,", hashmap[i].m);
-					fprintf(fp,"%d,", hashmap[i].c);
-					fprintf(fp,"%d)", hashmap[i].b);
-					if (hashmap[i].dinner)
-						fprintf(fp,"\", color: \"red\" },\n");
-					else
-						fprintf(fp,"\" },\n");
-				}
-				break;
-			
-			default:
-				break;
+			if (!hashmap[i].b) {
+				m = M - hashmap[i].m;
+				c = C - hashmap[i].c;
 			}
+			else {
+				m = hashmap[i].m;
+				c = hashmap[i].c;
+			}
+			fprintf(fp,"\t{ id: %d, name: \"(", i);
+			fprintf(fp,"%d,%d,%d)\"", m,c,hashmap[i].b);
+			//fprintf(fp,", val: %d", hashmap[i].deep);
+			if (hashmap[i].m == 0 && hashmap[i].c == 0)
+				fprintf(fp,", color: \"green\" },\n");
+			else if (hashmap[i].m == M && hashmap[i].c == C)
+				fprintf(fp,", color: \"green\" },\n");
+			else if (hashmap[i].dinner)
+				fprintf(fp,", color: \"red\" },\n");
+			else
+				fprintf(fp," },\n");
 		}
 	}
 
@@ -179,21 +153,14 @@ void genViz(State *hashmap, int **graph) {
 		line = false;
 		for (int j=0; j < MAPSIZE; j++) {
 			if (graph[i][j]) {
-				switch (hashmap[i].b) {
-				case 0:
+				if (!hashmap[i].b) {
 					m = hashmap[j].m - hashmap[i].m;
 					c = hashmap[j].c - hashmap[i].c;
-					break;
-				case 1:
+				}
+				else {
 					m = hashmap[i].m - hashmap[j].m;
 					c = hashmap[i].c - hashmap[j].c;
-					break;
-				
-				default:
-					exit(1);
-					break;
 				}
-
 				if (i != j) {
 					fprintf(fp,"\t{ target: %d, source: %d,", j,i);
 					fprintf(fp," name: \"%d,%d\" },\n", m,c);
@@ -202,7 +169,7 @@ void genViz(State *hashmap, int **graph) {
 		}
 		if (line) printf("\n");
 	}
-
+	
 	fprintf(fp,"\t]\n};");
 
 	fclose(fp);

@@ -18,11 +18,10 @@
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
 
-#include "struct.h"
+#include "hash.h"
+#include "deque.h"
 #include "solve.h"
 #include "util.h"
 #include "graph.h"
-#include "stack.h"
-#include "search.h"
 
 #endif // _MAIN_H

@@ -23,68 +23,14 @@ int main(int argc, char **argv) {
 
 	State start = setState(M,C);
  	State *hashmap = initMap();
-	int **graph = iniGraph();
 
-	addState(start,hashmap);
-	expand(start,hashmap);
-   	for (int i=0; i < 5; i++) {
-		for (int j=0; j < MAPSIZE; j++) {
-			if (!hashmap[j].dinner) {
-				expand(hashmap[j],hashmap);
-			}
-		}
-	}
+	//largura(start,hashmap);
+	profund(start,hashmap);
 
 	prtMap(hashmap);
 
 	int stMppd = stMapp(hashmap);
 	printf("\n Estados Mapeados: %d\n\n", stMppd);
-	gGraph(hashmap,graph);
-	genDot(hashmap,graph);
-	genViz(hashmap,graph);
-	prtGraph(graph);
-
-	// METODOS DE BUSCA IMPLEMENTADOS
-
-	printf("\n---- Busca em profundidade:\n\n");
-	State *hashma2p = initMap();
-	int **grap2h = iniGraph();
-	grap2h = depthFirstSearch(start, hashma2p);
-	prtGraph(grap2h);
-	free(hashma2p);
-	delGraph(grap2h);
-
-
-	printf("\n---- Busca em Largura:\n\n");
-	State end; end.m = 0; end.c = 0; end.b = 0;
-	State *hashma3p = initMap();
-	int **grap3h = iniGraph();
-	grap3h = breadthFirstSearch(start, hashma3p, end);
-	prtGraph(grap3h);
-	free(hashma3p);
-	delGraph(grap3h);
-
-
-	printf("\n Busca em largura bidirecional:\n\n");
-	State *hashma4p = initMap();
-	int **grap4h = iniGraph();
-	State *hashma4p2 = initMap();
-	grap4h = bidirectionalBredthSearch(start, end, hashma4p, hashma4p2);
-	prtGraph(grap4h);
-	free(hashma4p);
-	delGraph(grap4h);
-
-
-
-	printf("\n Busca em profundidade limitada - limit = 8:\n\n");
-	State *hashma5p = initMap();
-	int **grap5h = iniGraph();
-	grap5h = limitedDepthSearch(start, hashma5p, 8);
-	prtGraph(grap5h);
-	delGraph(grap5h);
-	free(hashma5p);
-
-
 
 	// Initialize GTK+
     gtk_init(&argc, &argv);
@@ -113,7 +59,7 @@ int main(int argc, char **argv) {
     g_signal_connect(webView, "close", G_CALLBACK(closeWebViewCb), mainWindow);
 
 	// Load a web page into the browser instance
-    webkit_web_view_load_uri(webView,home);
+    webkit_web_view_load_uri(webView, home);
 
 	// Make sure that when the browser area becomes visible, it will get mouse
     // and keyboard events
@@ -126,7 +72,6 @@ int main(int argc, char **argv) {
     // Run the main GTK+ event loop
     gtk_main();
 
-//	delGraph(graph);
 	free(hashmap);
 
 	return 0;
