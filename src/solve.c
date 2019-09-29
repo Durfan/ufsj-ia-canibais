@@ -78,14 +78,19 @@ void largura(State state, State *hashmap) {
 	State visitado;
 
 	while (!dqEmpty(deque)) {
+		//dqprt(deque);
 		visitado = hashmap[dqpopHead(deque)];
 		expand(visitado,hashmap,deque,graph);
+		metrica(true);
 	}
+
+	printf(" Visitados -> %02d\n", metrica(false));
 
 	prtGraph(graph);
 	genDot(hashmap,graph);
 	genViz(hashmap,graph);
 
+	dqclr(deque);
 	delGraph(graph);
 }
 
@@ -98,15 +103,27 @@ void profund(State state, State *hashmap) {
 	State visitado;
 
 	while (!dqEmpty(deque)) {
+		//dqprt(deque);
 		visitado = hashmap[dqpopTail(deque)];
 		expand(visitado,hashmap,deque,graph);
+		metrica(true);
 	}
+
+	printf(" Visitados -> %02d\n", metrica(false));
 
 	prtGraph(graph);
 	genDot(hashmap,graph);
 	genViz(hashmap,graph);
 
+	dqclr(deque);
 	delGraph(graph);
+}
+
+int metrica(bool count) {
+	static int visited;
+	if (count)
+		visited++;
+	return visited;
 }
 
 int stMapp(State *hashmap) {

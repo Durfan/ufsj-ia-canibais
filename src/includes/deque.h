@@ -8,6 +8,7 @@ typedef struct node_t {
 } Node;
 
 typedef struct deque_t {
+	int size;
 	struct node_t *head;
 	struct node_t *tail;
 } Deque;
@@ -19,7 +20,8 @@ int dqpopHead(Deque *deque);
 int dqpopTail(Deque *deque);
 int dqpekHead(Deque *deque);
 int dqpekTail(Deque *deque);
-void dqfree(Deque *deque);
+void dqprt(Deque *deque);
+void dqclr(Deque *deque);
 bool dqEmpty(Deque *deque);
 
 #endif // _DEQUE_H 

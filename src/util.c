@@ -5,9 +5,9 @@ void prtMap(State *hashmap) {
 	State parent;
 
 	for (int i=0; i < MAPSIZE; i++) {
-		src = hashmap[i].src;
-		parent = hashmap[src];
 		if (hashmap[i].mapped) {
+			src = hashmap[i].src;
+			parent = hashmap[src];
 			printf(" %03d: (", i);
 			switch (hashmap[i].b) {
 			case 0:				
