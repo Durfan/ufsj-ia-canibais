@@ -2,7 +2,8 @@ const elem = document.getElementById('graph');
 
 const Graph = ForceGraph()(elem)
 	.graphData(gData)
-	.centerAt(-80,0)
+	.width(480)
+	.height(480)
 	.nodeRelSize(4)
 	.linkWidth(2)
 	.linkDirectionalParticles(2)
