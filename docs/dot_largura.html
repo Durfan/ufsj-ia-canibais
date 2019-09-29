@@ -7,7 +7,6 @@
     <style>
       body { margin: 0px !important; }
     </style>
-    <script src="js/force-graph.min.js"></script>
     <title>Missionarios vs. Canibais</title>
   </head>
 
@@ -15,17 +14,17 @@
 
     <ul class="nav nav-tabs mt-1 ml-1">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profundidade</a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profundidade</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item active" href="#">Force-Graph</a>
+          <a class="dropdown-item" href="index.html">Force-Graph</a>
           <a class="dropdown-item" href="dot_profund.html">dot-SVG Graph</a>
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Largura</a>
+        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Largura</a>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="largura.html">Force-Graph</a>
-          <a class="dropdown-item" href="dot_largura.html">dot-SVG Graph</a>
+          <a class="dropdown-item active" href="#">dot-SVG Graph</a>
         </div>
       </li>
     </ul>
@@ -39,7 +38,7 @@
         </div>
 
         <div class="col">
-          <div id="graph"></div>
+		      <img src="graphs/largura.svg" width="480">
         </div>
       </div>
 
@@ -50,8 +49,6 @@
       document.getElementById('cleric').draggable = false;
     </script>
 
-    <script src="graphs/profund.js"></script>
-    <script src="js/graph_core.js"></script>
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
   </body>
