@@ -15,9 +15,6 @@
 #include <stdbool.h>
 #include <linux/limits.h>
 
-#include <gtk/gtk.h>
-#include <webkit2/webkit2.h>
-
 #include "hash.h"
 #include "deque.h"
 #include "solve.h"

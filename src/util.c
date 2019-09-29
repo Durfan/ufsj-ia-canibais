@@ -1,5 +1,15 @@
 #include "./includes/main.h"
 
+void prtFOOclk(struct timeval tv1, struct timeval tv2) {
+    printf("   F Tempo: %fs\n", ftempo(tv1,tv2));
+}
+
+// Calcula o tempo de execucao até determinado ponto
+double ftempo(struct timeval tv1, struct timeval tv2) {
+    return (double)(tv2.tv_usec - tv1.tv_usec)/1000000 +
+           (double)(tv2.tv_sec-tv1.tv_sec);
+}
+
 void prtMap(State *hashmap) {
 	int src;
 	State parent;

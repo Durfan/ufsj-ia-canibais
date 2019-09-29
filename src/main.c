@@ -1,4 +1,7 @@
 #include "./includes/main.h"
+#include <gtk/gtk.h>
+#include <webkit2/webkit2.h>
+#include <sys/time.h>
 
 static void destroyWindowCb(void);
 static gboolean closeWebViewCb(GtkWidget *window);
@@ -7,13 +10,16 @@ GdkPixbuf *create_pixbuf(const gchar *filename);
 
 int main(int argc, char **argv) {
 
+    struct timeval tv1, tv2;
+
 	static char home[1024];
 	static char icon[1024];
 	char apath[PATH_MAX];
 
+    system("clear");
 	realpath("resources", apath);
 	printf(" DEBUG output -----\n");
-    printf(" Resources Path: %s\n\n", apath);
+    printf(" Resources Path: %s\n", apath);
 
 	strcpy(home,"file://");
     strcat(home,apath);
@@ -21,8 +27,18 @@ int main(int argc, char **argv) {
 	strcpy(icon,apath);
     strcat(icon,"/img/icon.png");
 
+
+    gettimeofday(&tv1,NULL);
 	largura();
+    gettimeofday(&tv2,NULL);
+    prtFOOclk(tv1,tv2);
+
+
+    gettimeofday(&tv1,NULL);
 	profund();
+    gettimeofday(&tv2,NULL);
+    prtFOOclk(tv1,tv2);
+
 
 	// Initialize GTK+
     gtk_init(&argc, &argv);
