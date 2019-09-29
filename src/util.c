@@ -1,9 +1,20 @@
 #include "./includes/main.h"
 
-void timeresult(clock_t start) {
+void timeresult(clock_t start, char *file) {
     clock_t diff = clock() - start;
 	double time = ((double)diff) / CLOCKS_PER_SEC;
-    printf("   F Tempo: %fs\n", time);
+    printf(" F Tempo: %fs\n", time);
+
+	char output[0x100];
+	strcpy(output,"./resources/graphs/");
+	strcat(output,file);
+	strcat(output,".js");
+    FILE *fp = fopen(output,"a");
+	if (fp == NULL) return;
+
+	fprintf(fp,"\n$('span.tempo').text('%fs');", time);
+
+	fclose(fp);
 }
 
 void prtMap(State *hashmap) {

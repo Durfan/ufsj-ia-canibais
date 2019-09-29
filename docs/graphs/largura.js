@@ -53,3 +53,7 @@ const gData = {
 	{ target: 14, source: 31, name: "0,1" },
 	]
 };
+
+$('span.memoria').text('25');
+
+$('span.tempo').text('0.000635s');

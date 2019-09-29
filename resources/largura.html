@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css" >
     <style>
       body { margin: 0px !important; }
     </style>
@@ -14,10 +15,13 @@
   <body>
 
     <ul class="nav nav-tabs mt-1 ml-1">
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-project-diagram"></i></a>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profundidade</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="home.html">Force-Graph</a>
+          <a class="dropdown-item" href="index.html">Force-Graph</a>
           <a class="dropdown-item" href="dot_profund.html">dot-SVG Graph</a>
         </div>
       </li>
@@ -34,6 +38,8 @@
 
       <div class="row mt-4">
         <div class="col">
+          <p><i class="fas fa-stopwatch"></i> <span class="tempo"></span><br />
+          <i class="fas fa-memory"></i> <span class="memoria"></span> estados</p>
           <img id="canibal" class="fixed-bottom" src="img/canibal.png">
           <img id="cleric"  class="fixed-bottom ml-5" src="img/cleric.png">
         </div>
@@ -50,10 +56,10 @@
       document.getElementById('cleric').draggable = false;
     </script>
 
-    <script src="graphs/largura.js"></script>
-    <script src="js/graph_core.js"></script>
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="graphs/largura.js"></script>
+    <script src="js/graph_core.js"></script>
   </body>
 </html>
 

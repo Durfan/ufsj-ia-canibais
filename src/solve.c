@@ -73,7 +73,6 @@ void largura(void) {
 	State *hashmap = initMap();
 	Deque *deque = dqcreate();
 	int **graph = iniGraph();
-	int visited = 0;
 
 	State start = setState(M,C);
 	addState(start,hashmap);
@@ -85,13 +84,11 @@ void largura(void) {
 		//dqprt(deque);
 		visitado = hashmap[dqpopHead(deque)];
 		expand(visitado,hashmap,deque,graph);
-		visited++;
 	}
-
-	prtData("Largura",visited,hashmap,graph);
 
 	genDot(hashmap,graph,"largura");
 	genViz(hashmap,graph,"largura");
+	genSol(hashmap,graph,"largura");
 
 	dqclr(deque);
 	delGraph(graph);
@@ -102,7 +99,6 @@ void profund(void) {
 	State *hashmap = initMap();
 	Deque *deque = dqcreate();
 	int **graph = iniGraph();
-	int visited = 0;
 
 	State start = setState(M,C);
 	addState(start,hashmap);
@@ -114,28 +110,38 @@ void profund(void) {
 		//dqprt(deque);
 		visitado = hashmap[dqpopTail(deque)];
 		expand(visitado,hashmap,deque,graph);
-		visited++;
 	}
-
-	prtData("Profundidade",visited,hashmap,graph);
 
 	genDot(hashmap,graph,"profund");
 	genViz(hashmap,graph,"profund");
+	genSol(hashmap,graph,"profund");
 
 	dqclr(deque);
 	delGraph(graph);
 	free(hashmap);
 }
 
-void prtData(char *busca, int visited, State *hashmap, int **graph) {
+void genSol(State *hashmap, int **graph, char *file) {
+	int memoria = stMapp(hashmap);
+
 	printf("\n ---------------------------------------------\n");
-	printf(" Busca: %s\n\n", busca);
+	printf(" Busca: %s\n\n", file);
 	prtGraph(graph);
 	printf("\n");
 	prtMap(hashmap);
 	printf("\n");
-	printf(" Visitados: %02d\n", visited);
-	printf("  Mapeados: %02d\n", stMapp(hashmap));
+	printf(" Memoria: %02d\n", memoria);
+
+	char output[0x100];
+	strcpy(output,"./resources/graphs/");
+	strcat(output,file);
+	strcat(output,".js");
+    FILE *fp = fopen(output,"a");
+	if (fp == NULL) return;
+
+	fprintf(fp,"\n\n$('span.memoria').text('%d');\n", memoria);
+
+	fclose(fp);
 }
 
 int stMapp(State *hashmap) {

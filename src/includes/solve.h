@@ -3,11 +3,11 @@
 
 State carry(State state, int m, int c);
 State isDinner(State state);
-bool feasible(State state, int my, int cy);
+bool feasible(State state, int m, int c);
 void expand(State state, State *hashmap, Deque *deque, int **graph);
 void largura(void);
 void profund(void);
-void prtData(char *busca, int visited, State *hashmap, int **graph);
+void genSol(State *hashmap, int **graph, char *file);
 int stMapp(State *hashmap);
 
 #endif // _SOLVE_H

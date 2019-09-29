@@ -22,18 +22,18 @@ int main(int argc, char **argv) {
 
 	strcpy(home,"file://");
     strcat(home,apath);
-	strcat(home,"/home.html");
+	strcat(home,"/index.html");
 	strcpy(icon,apath);
     strcat(icon,"/img/icon.png");
 
 
     start = clock();
 	largura();
-    timeresult(start);
+    timeresult(start,"largura");
 
     start = clock();
 	profund();
-    timeresult(start);
+    timeresult(start,"profund");
 
 
 	// Initialize GTK+
