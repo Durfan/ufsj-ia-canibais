@@ -1,7 +1,6 @@
 #include "./includes/main.h"
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
-#include <sys/time.h>
 
 static void destroyWindowCb(void);
 static gboolean closeWebViewCb(GtkWidget *window);
@@ -10,7 +9,7 @@ GdkPixbuf *create_pixbuf(const gchar *filename);
 
 int main(int argc, char **argv) {
 
-    struct timeval tv1, tv2;
+    clock_t start;
 
 	static char home[1024];
 	static char icon[1024];
@@ -28,16 +27,13 @@ int main(int argc, char **argv) {
     strcat(icon,"/img/icon.png");
 
 
-    gettimeofday(&tv1,NULL);
+    start = clock();
 	largura();
-    gettimeofday(&tv2,NULL);
-    prtFOOclk(tv1,tv2);
+    timeresult(start);
 
-
-    gettimeofday(&tv1,NULL);
+    start = clock();
 	profund();
-    gettimeofday(&tv2,NULL);
-    prtFOOclk(tv1,tv2);
+    timeresult(start);
 
 
 	// Initialize GTK+
