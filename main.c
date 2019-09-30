@@ -1,6 +1,4 @@
 #include "./includes/main.h"
-#include <gtk/gtk.h>
-#include <webkit2/webkit2.h>
 
 static void destroyWindowCb(void);
 static gboolean closeWebViewCb(GtkWidget *window);
@@ -9,42 +7,45 @@ GdkPixbuf *create_pixbuf(const gchar *filename);
 
 int main(int argc, char **argv) {
 
-    clock_t start;
-
 	static char home[1024];
 	static char icon[1024];
 	char apath[PATH_MAX];
-
-    system("clear");
-	realpath("resources", apath);
+    
+	realpath("resources", apath); 
 	printf(" DEBUG output -----\n");
-    printf(" Resources Path: %s\n", apath);
-
+    printf(" Resources Path: %s\n\n", apath);
+    
 	strcpy(home,"file://");
     strcat(home,apath);
-	strcat(home,"/index.html");
+	strcat(home,"/home.html");
 	strcpy(icon,apath);
-    strcat(icon,"/img/icon.png");
+    strcat(icon,"/icon.png");
 
+	State start = setState(M,C);
+ 	State *hashmap = initMap();
+	int stMppd,hSize = mapSize();
 
-    start = clock();
-	largura();
-    timeresult(start,"largura");
+	addState(start,hashmap);
+	expand(start,hashmap);
 
-    start = clock();
-	profund();
-    timeresult(start,"profund");
+   	for (int i=0; i < 5; i++) {
+		for (int j=0; j < hSize; j++) {
+			if (!hashmap[j].dinner)
+				expand(hashmap[j],hashmap);
+		}
+	}
 
+	prtMap(hashmap);
 
-    start = clock();
-    buscaIterativa();
-    timeresult(start,"Iterativa");
+	stMppd = stMapp(hashmap);
+	printf("\n Estados Mapeados: %d\n\n", stMppd);
 
-/*
-    start = clock();
-    bidirecionalLargura();
-    timeresult(start,"Bidirecional");
-*/
+	int **graph = iniArray(hSize,hSize);
+	gGraph(hashmap,graph);
+	genDot(hashmap,graph);
+	genViz(hashmap,graph);
+	pGraph(graph,hSize);
+
 	// Initialize GTK+
     gtk_init(&argc, &argv);
 
@@ -72,7 +73,7 @@ int main(int argc, char **argv) {
     g_signal_connect(webView, "close", G_CALLBACK(closeWebViewCb), mainWindow);
 
 	// Load a web page into the browser instance
-    webkit_web_view_load_uri(webView, home);
+    webkit_web_view_load_uri(webView,home);
 
 	// Make sure that when the browser area becomes visible, it will get mouse
     // and keyboard events
@@ -84,6 +85,9 @@ int main(int argc, char **argv) {
 
     // Run the main GTK+ event loop
     gtk_main();
+
+	delArray(graph,hSize);
+	free(hashmap);
 
 	return 0;
 }
@@ -98,11 +102,11 @@ static gboolean closeWebViewCb(GtkWidget *window) {
 }
 
 GdkPixbuf *create_pixbuf(const gchar *filename) {
-
+    
    GdkPixbuf *pixbuf;
    GError *error = NULL;
    pixbuf = gdk_pixbuf_new_from_file(filename, &error);
-
+   
    if (!pixbuf) {
       fprintf(stderr, "%s\n", error->message);
       g_error_free(error);
