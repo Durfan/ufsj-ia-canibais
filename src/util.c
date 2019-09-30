@@ -27,7 +27,7 @@ void prtMap(State *hashmap) {
 			parent = hashmap[src];
 			printf(" %03d: (", i);
 			switch (hashmap[i].b) {
-			case 0:				
+			case 0:
 				printf("%d,", hashmap[i].m);
 				printf("%d,", hashmap[i].c);
 				printf("%d" , parent.b);
