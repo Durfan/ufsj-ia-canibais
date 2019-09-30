@@ -30,7 +30,7 @@ State setState(int m, int c) {
 }
 
 int hashKey(State state) {
-	char buffer[4];
+	char buffer[0x004];
 	sprintf(buffer, "%d%d", state.m*2,state.c);
 	int hash = atoi(buffer);
 	hash |= 0x010;

@@ -11,8 +11,8 @@ int main(int argc, char **argv) {
 
     clock_t start;
 
-	static char home[1024];
-	static char icon[1024];
+	static char home[0x400];
+	static char icon[0x400];
 	char apath[PATH_MAX];
 
     system("clear");
