@@ -8,7 +8,7 @@ Três missionários e três canibais estão em um lado de um rio, juntamente com
 
 ## Dependências
 
-[GTK+](https://www.gtk.org/download/linux.php)
+[GTK+](https://www.gtk.org/download/linux.php)  
 [WebKitGTK](https://webkitgtk.org/)
 
 ## Saídas
