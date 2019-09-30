@@ -1,6 +1,7 @@
 #include "./includes/main.h"
 #include <gtk/gtk.h>
 #include <webkit2/webkit2.h>
+#include <linux/limits.h>
 
 static void destroyWindowCb(void);
 static gboolean closeWebViewCb(GtkWidget *window);

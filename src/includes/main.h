@@ -14,7 +14,6 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <time.h>
-#include <linux/limits.h>
 
 #include "hash.h"
 #include "deque.h"
