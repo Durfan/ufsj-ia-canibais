@@ -13,7 +13,7 @@ $ make
 $ make debug # binario com debug
 $ make clean # remover binario
 $ ./mvsc
-$ ./plotGraph.sh # bash script de plot para dots gerados
+$ ./plotGraph.sh # plot para dots gerados
 ```
 
 ## Dependências
