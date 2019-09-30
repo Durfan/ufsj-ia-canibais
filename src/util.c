@@ -12,7 +12,7 @@ void timeresult(clock_t start, char *file) {
 	FILE *fp = fopen(output,"a");
 	if (fp == NULL) return;
 
-	fprintf(fp,"\n$('span.tempo').text('%fs');",time);
+	fprintf(fp,"$('span.tempo').text('%fs');",time);
 
 	fclose(fp);
 }
