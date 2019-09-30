@@ -73,7 +73,6 @@ static gboolean closeWebViewCb(GtkWidget *window) {
 }
 
 GdkPixbuf *create_pixbuf(const gchar *filename) {
-
    GdkPixbuf *pixbuf;
    GError *error = NULL;
    pixbuf = gdk_pixbuf_new_from_file(filename, &error);
