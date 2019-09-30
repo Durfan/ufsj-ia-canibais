@@ -9,11 +9,11 @@ Três missionários e três canibais estão em um lado de um rio, juntamente com
 ## Instalação
 
 ``` bash
-$ make
-$ make debug # binario com debug
-$ make clean # remover binario
-$ ./mvsc # binario
-$ ./plotGraph.sh # plot para dots gerados
+make
+make debug # binario com debug
+make clean # remover binario
+./mvsc # binario
+./plotGraph.sh # plot para dots gerados
 ```
 
 ## Dependências
