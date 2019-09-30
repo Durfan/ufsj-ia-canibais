@@ -2,7 +2,7 @@
 #define _DEQUE_H
 
 typedef struct node_t {
-    int key;
+	int key;
 	struct node_t *next;
 	struct node_t *prev;
 } Node;

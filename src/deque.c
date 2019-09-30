@@ -2,7 +2,7 @@
 
 Deque *dqcreate(void) {
 	Deque *deque = malloc(sizeof(Deque));
-    assert(deque);
+	assert(deque);
 
 	deque->head = deque->tail = NULL;
 	deque->size = 0;
@@ -98,10 +98,10 @@ void dqclr(Deque *deque) {
 
 	Node *delete;
 	while (deque->head != NULL) {
-        delete = deque->head;
-        deque->head = deque->head->next;
-        free(delete);
-    }
+		delete = deque->head;
+		deque->head = deque->head->next;
+		free(delete);
+	}
 
 	free(deque);
 }

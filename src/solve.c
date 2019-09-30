@@ -136,7 +136,7 @@ void genSol(State *hashmap, int **graph, char *file) {
 	strcpy(output,"./resources/graphs/");
 	strcat(output,file);
 	strcat(output,".js");
-    FILE *fp = fopen(output,"a");
+	FILE *fp = fopen(output,"a");
 	if (fp == NULL) return;
 
 	fprintf(fp,"\n\n$('span.memoria').text('%d');\n", memoria);

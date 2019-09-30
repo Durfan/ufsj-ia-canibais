@@ -1,17 +1,17 @@
 #include "./includes/main.h"
 
 int **iniGraph(void) {
-    int **graph = calloc(MAPSIZE,sizeof(int*));
+	int **graph = calloc(MAPSIZE,sizeof(int*));
 	assert(graph);
-    for (int i=0; i < MAPSIZE; i++)
+	for (int i=0; i < MAPSIZE; i++)
 		graph[i] = calloc(MAPSIZE,sizeof(int));
-    return graph;
+	return graph;
 }
 
 void delGraph(int **graph) {
-    for (int i=0 ; i < MAPSIZE ; i++)
+	for (int i=0 ; i < MAPSIZE ; i++)
 		free(graph[i]);
-    free(graph);
+	free(graph);
 }
 
 void prtGraph(int **graph) {
@@ -47,7 +47,7 @@ void genDot(State *hashmap, int **graph, char *file) {
 	strcat(output,file);
 	strcat(output,".dot");
 
-    FILE *fp = fopen(output,"w");
+	FILE *fp = fopen(output,"w");
 	assert(fp);
 
 	int m,c;
@@ -63,7 +63,7 @@ void genDot(State *hashmap, int **graph, char *file) {
 			}
 			else {
 				m = hashmap[i].m;
-				c = hashmap[i].c;				
+				c = hashmap[i].c;
 			}
 
 			fprintf(fp,"\t\"%d\"[label=",i);
@@ -109,7 +109,7 @@ void genViz(State *hashmap, int **graph, char *file) {
 	strcat(output,file);
 	strcat(output,".js");
 
-    FILE *fp = fopen(output,"w");
+	FILE *fp = fopen(output,"w");
 	assert(fp);
 
 	int m,c;

@@ -12,9 +12,9 @@ State *initMap(void) {
 		hashmap[i].deep = -1;
 		hashmap[i].dinner = false;
 		hashmap[i].mapped = false;
-	} 
+	}
 
-    return hashmap;
+	return hashmap;
 }
 
 State setState(int m, int c) {
