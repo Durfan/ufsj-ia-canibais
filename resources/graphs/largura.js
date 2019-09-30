@@ -56,4 +56,4 @@ const gData = {
 
 $('span.memoria').text('25');
 
-$('span.tempo').text('0.000731s');
+$('span.tempo').text('0.000840s');
