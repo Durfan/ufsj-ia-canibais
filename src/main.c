@@ -10,7 +10,6 @@ GdkPixbuf *create_pixbuf(const gchar *filename);
 int main(int argc, char **argv) {
 
     clock_t start;
-
 	static char home[0x400];
 	static char icon[0x400];
 	char apath[PATH_MAX];
@@ -70,7 +69,7 @@ static void destroyWindowCb(void) {
 
 static gboolean closeWebViewCb(GtkWidget *window) {
     gtk_widget_destroy(window);
-    return TRUE;
+    return true;
 }
 
 GdkPixbuf *create_pixbuf(const gchar *filename) {
