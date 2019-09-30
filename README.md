@@ -13,8 +13,9 @@ Três missionários e três canibais estão em um lado de um rio, juntamente com
 
 ## Saídas
 
-[./resources/graphs/*.dot](https://github.com/Durfan/ufsj-ia-canibais/blob/master/resources/graphs/) -> [Graphviz Format](https://www.graphviz.org/) 
+[./resources/graphs/*.dot](https://github.com/Durfan/ufsj-ia-canibais/blob/master/resources/graphs/) -> [Graphviz Format](https://www.graphviz.org/)  
+[./resources/graphs/*.js](https://github.com/Durfan/ufsj-ia-canibais/blob/master/resources/graphs/) -> [Force-directed graph](https://github.com/vasturiano/force-graph) 
 
 ## Force Graph API
 
-[3D force-directed graph component using ThreeJS/WebGL](https://github.com/vasturiano/3d-force-graph)
+[Force-directed graph rendered on HTML5 canvas](https://github.com/vasturiano/force-graph)
