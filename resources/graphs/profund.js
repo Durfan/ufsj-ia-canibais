@@ -55,4 +55,4 @@ const gData = {
 };
 
 $('span.memoria').text('25');
-$('span.tempo').text('0.000301s');
+$('span.tempo').text('0.000470s');
