@@ -72,10 +72,11 @@ int main(int argc, char **argv) {
 	gtk_main();
 
 	return 0;
-
+/* 
 	int mundiais = 0;
 	int palmeiras = mundiais;
 	assert(!palmeiras);
+*/
 }
 
 static void destroyWindowCb(void) {
