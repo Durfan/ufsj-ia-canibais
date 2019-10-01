@@ -47,7 +47,8 @@ State isDinner(State state) {
 void expand(State state, State *hashmap, Deque *deque, int **graph) {
 
 	State child = state;
-	if (child.dinner || !hashKey(state)) return;
+	if (child.dinner || child.deep > 10)
+		return;
 
 	int m,c,boat[][2] = { {2,0},{0,2},{1,1},{1,0},{0,1} };
 
@@ -74,14 +75,13 @@ void largura(void) {
 	Deque *deque = dqcreate();
 	int **graph = iniGraph();
 
-	State start = setState(M,C);
+	State start = setState(M,C,1);
 	addState(start,hashmap);
 
 	dqpshHead(deque,hashKey(start));
 	State visitado;
 
 	while (!dqEmpty(deque)) {
-		//dqprt(deque);
 		visitado = hashmap[dqpopHead(deque)];
 		expand(visitado,hashmap,deque,graph);
 	}
@@ -100,14 +100,13 @@ void profund(void) {
 	Deque *deque = dqcreate();
 	int **graph = iniGraph();
 
-	State start = setState(M,C);
+	State start = setState(M,C,1);
 	addState(start,hashmap);
 
 	dqpshHead(deque,hashKey(start));
 	State visitado;
 
 	while (!dqEmpty(deque)) {
-		//dqprt(deque);
 		visitado = hashmap[dqpopTail(deque)];
 		expand(visitado,hashmap,deque,graph);
 	}
@@ -119,6 +118,90 @@ void profund(void) {
 	dqclr(deque);
 	delGraph(graph);
 	free(hashmap);
+}
+
+void bidirec(void) {
+	State *hashmap = initMap();
+	Deque *deque = dqcreate();
+	int **graph = iniGraph();
+
+	State start = setState(M,C,1);
+	State end   = setState(0,0,0);
+	addState(start,hashmap);
+	addState(end,hashmap);
+
+	dqpshHead(deque,hashKey(start));
+	dqpshTail(deque,hashKey(end));
+
+	int bot,top,nt,nb;
+
+	while (!dqEmpty(deque)) {
+
+		if (deque->tail) {
+			bot = dqpopTail(deque);
+			expand(hashmap[bot],hashmap,deque,graph);
+			if (!hashmap[bot].dinner) nb = bot;
+		}
+
+		if (deque->head) {
+			top = dqpopHead(deque);
+			expand(hashmap[top],hashmap,deque,graph);
+			if (!hashmap[top].dinner) nt = top;
+		}
+
+	}
+
+	graph[nt][nb] = 1;
+
+	genDot(hashmap,graph,"bidirec");
+	genViz(hashmap,graph,"bidirec");
+	genSol(hashmap,graph,"bidirec");
+
+	dqclr(deque);
+	delGraph(graph);
+	free(hashmap);
+}
+
+void iteratv(void) {
+	int limit = 1;
+	while (!limitada(limit))
+		limit++;
+}
+
+int limitada(int limit) {
+	State *hashmap = initMap();
+	Deque *deque = dqcreate();
+	int **graph = iniGraph();
+
+	State start = setState(M,C,1);
+	State visitado;
+	addState(start,hashmap);
+
+	dqpshHead(deque,hashKey(start));
+
+	while (!dqEmpty(deque)) {
+		
+		visitado = hashmap[dqpopTail(deque)];
+		
+		if (hashKey(visitado) == 0) {
+			genDot(hashmap,graph,"iteratv");
+			genViz(hashmap,graph,"iteratv");
+			genSol(hashmap,graph,"iteratv");
+			//prtGraph(graph);
+			delGraph(graph);
+			free(hashmap);
+			return 1;
+		}
+
+		if (visitado.deep < limit)
+			expand(visitado,hashmap,deque,graph);
+
+	}
+
+	dqclr(deque);
+	delGraph(graph);
+	free(hashmap);
+	return 0;
 }
 
 void genSol(State *hashmap, int **graph, char *file) {

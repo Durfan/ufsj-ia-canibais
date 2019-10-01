@@ -47,7 +47,7 @@ int dqpopHead(Deque *deque) {
 
 	if (deque->head == deque->tail)
 		deque->head = deque->tail = NULL;
-	else
+	else {}
 		deque->head = node->next;
 
 	deque->size--;
@@ -61,8 +61,10 @@ int dqpopTail(Deque *deque) {
 
 	if (deque->head == deque->tail)
 		deque->head = deque->tail = NULL;
-	else
+	else {
 		deque->tail = node->prev;
+		deque->tail->next = NULL;
+	}
 
 	deque->size--;
 	free(node);

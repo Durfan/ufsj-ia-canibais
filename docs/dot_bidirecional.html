@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/all.min.css">
     <link rel="stylesheet" href="css/custom.css">
-    <script src="js/force-graph.min.js"></script>
     <title>Missionarios vs. Canibais</title>
   </head>
 
@@ -20,28 +19,22 @@
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profundidade</a>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="index.html">Force-Graph</a>
-          <a class="dropdown-item" href="dot_profund.html">dot-SVG Graph</a>
+          <a class="dropdown-item active" href="#">dot-SVG Graph</a>
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Largura</a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Largura</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item active" href="#">Force-Graph</a>
+          <a class="dropdown-item" href="largura.html">Force-Graph</a>
           <a class="dropdown-item" href="dot_largura.html">dot-SVG Graph</a>
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bi-Direcional</a>
+        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bi-Direcional</a>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="bidirecional.html">Force-Graph</a>
-          <a class="dropdown-item" href="dot_bidirecional.html">dot-SVG Graph</a>
+          <a class="dropdown-item active" href="dot_bidirecional.html">dot-SVG Graph</a>
         </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-stopwatch"></i> <span class="tempo"></span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-memory"></i> <span class="memoria"></span> estados</a>
       </li>
     </ul>
 
@@ -54,7 +47,7 @@
         </div>
 
         <div class="col">
-          <div id="graph"></div>
+          <img src="graphs/bidirec.svg" width="450">
         </div>
       </div>
 
@@ -65,7 +58,5 @@
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/custom.js"></script>
-    <script src="graphs/largura.js"></script>
-    <script src="js/graph_core.js"></script>
   </body>
 </html>

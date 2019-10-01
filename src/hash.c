@@ -17,11 +17,11 @@ State *initMap(void) {
 	return hashmap;
 }
 
-State setState(int m, int c) {
+State setState(int m, int c, int b) {
 	State state;
 	state.m = m;
 	state.c = c;
-	state.b = 1;
+	state.b = b;
 	state.src = hashKey(state);
 	state.deep = 0;
 	state.dinner = false;

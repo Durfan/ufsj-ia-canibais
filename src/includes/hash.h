@@ -10,7 +10,7 @@ typedef struct state_t {
 } State;
 
 State *initMap(void);
-State setState(int m, int c);
+State setState(int m, int c, int b);
 int hashKey(State state);
 void addState(State state, State *hashmap);
 bool mapped(State state, State *hashmap);

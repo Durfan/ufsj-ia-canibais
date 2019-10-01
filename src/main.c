@@ -35,6 +35,16 @@ int main(int argc, char **argv) {
 	profund();
 	timeresult(start,"profund");
 
+	start = clock();
+	bidirec();
+	timeresult(start,"bidirec");
+
+/* 
+	start = clock();
+	iteratv();
+	timeresult(start,"iteratv");
+ */
+
 
 	gtk_init(&argc, &argv);
 
