@@ -39,11 +39,11 @@ int main(int argc, char **argv) {
 	bidirec();
 	timeresult(start,"bidirec");
 
-/* 
+/*
 	start = clock();
 	iteratv();
 	timeresult(start,"iteratv");
- */
+*/
 
 
 	gtk_init(&argc, &argv);
@@ -72,10 +72,10 @@ int main(int argc, char **argv) {
 	gtk_main();
 
 	return 0;
-/* 
+/*
 	int mundiais = 0;
 	int palmeiras = mundiais;
-	assert(!palmeiras);
+	assert(palmeiras);
 */
 }
 
