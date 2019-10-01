@@ -184,12 +184,15 @@ int limitada(int limit) {
 		visitado = hashmap[dqpopTail(deque)];
 		
 		if (hashKey(visitado) == 0) {
+
 			genDot(hashmap,graph,"iteratv");
 			genViz(hashmap,graph,"iteratv");
 			genSol(hashmap,graph,"iteratv");
-			//prtGraph(graph);
+
+			dqclr(deque);
 			delGraph(graph);
 			free(hashmap);
+
 			return 1;
 		}
 
@@ -201,6 +204,7 @@ int limitada(int limit) {
 	dqclr(deque);
 	delGraph(graph);
 	free(hashmap);
+
 	return 0;
 }
 
